@@ -1,18 +1,28 @@
 spring:
   application:
-    name: mscloud.eureka.com
+    name: mscloud.privider-dept.com
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql//39.106.101.34:3306/spcloudDB1
+    username: root
+    password: abc123123
+    dbcp2:
+      min-idle: 1
+      initial-size: 1
+      max-total: 5
+      max-wait-millis: 200
 
 server:
-  port: 9090
-
-eureka:
-  instance:
-    #    prefer-ip-address: true
-    hostname: localhost
-  client:
-    register-with-eureka: false
-    fetch-registry: false
-    service-url:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  port: 8001
 
 
+mybatis:
+  config-location: classpath: mybatis/mybatis/mybatis.cfg.xml
+  type-aliaes-package: com.examples.spcloud.entity
+  mapper-locations:
+    - classpath: mybatis/mapper/**/*.xml
+
+mybatis-plus:
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
