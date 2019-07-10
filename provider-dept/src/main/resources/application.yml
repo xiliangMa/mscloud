@@ -3,24 +3,24 @@ spring:
     name: mscloud.privider-dept.com
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql//39.106.101.34:3306/spcloudDB1
+    url: jdbc:mysql://39.106.101.34:3306/spcloudDB1?useSSL=false
     username: root
     password: abc123123
-    dbcp2:
-      min-idle: 1
-      initial-size: 1
-      max-total: 5
-      max-wait-millis: 200
+#    dbcp2:
+#      min-idle: 1
+#      initial-size: 1
+#      max-total: 5
+#      max-wait-millis: 200
 
 server:
   port: 8001
 
 
 mybatis:
-  config-location: classpath: mybatis/mybatis/mybatis.cfg.xml
-  type-aliaes-package: com.examples.spcloud.entity
+  config-location: classpath:mybatis/mybatis.cfg.xml
+  type-aliaes-package: com.example.spcloud.entity
   mapper-locations:
-    - classpath: mybatis/mapper/**/*.xml
+    - classpath:mybatis/mapper/*.xml
 
 mybatis-plus:
   global-config:
