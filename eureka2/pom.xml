@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>eureka</artifactId>
-    <description>服务注册中心</description>
+    <artifactId>eureka2</artifactId>
+    <description>服务注册中心2</description>
 
     <dependencies>
         <dependency>
@@ -22,6 +22,5 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
-
 
 </project>
