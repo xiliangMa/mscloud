@@ -76,5 +76,6 @@
         <module>eureka</module>
         <module>api</module>
         <module>provider-dept</module>
+        <module>consumer-dept</module>
     </modules>
 </project>

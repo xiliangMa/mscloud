@@ -18,6 +18,7 @@
             <groupId>com.examples.spcloud</groupId>
             <artifactId>api</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
