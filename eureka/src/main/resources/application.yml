@@ -13,6 +13,6 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://eureka-9091.com:9091/eureka
+      defaultZone: http://eureka-9091.com:9091/eureka, http://eureka-9092.com:9092/eureka
 
 

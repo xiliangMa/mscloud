@@ -3,14 +3,14 @@ spring:
     name: eureka-server
 
 server:
-  port: 9091
+  port: 9092
 
 eureka:
   instance:
-    hostname: eureka-9091.com
-    instance-id: eureka-9091
+    hostname: eureka-9092.com
+    instance-id: eureka-9092
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://eureka-9090.com:9090/eureka, http://eureka-9092.com:9092/eureka
+      defaultZone: http://eureka-9090.com:9090/eureka, http://eureka-9091.com:9091/eureka

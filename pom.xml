@@ -73,10 +73,11 @@
 
 
     <modules>
-        <module>eureka</module>
         <module>api</module>
         <module>provider-dept</module>
         <module>consumer-dept</module>
+        <module>eureka</module>
         <module>eureka2</module>
+        <module>eureka3</module>
     </modules>
 </project>
