@@ -9,9 +9,8 @@ eureka:
   instance:
     hostname: eureka-9091.com
     instance-id: eureka-9091
-    prefer-ip-address: true
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
       defaultZone: http://eureka-9090.com:9090/eureka, http://eureka-9092.com:9092/eureka

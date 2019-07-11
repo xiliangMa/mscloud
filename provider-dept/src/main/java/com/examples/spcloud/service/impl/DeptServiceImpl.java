@@ -17,17 +17,14 @@ public class DeptServiceImpl implements DeptService {
     @Autowired
     private DeptDao deptDao;
 
-    @Override
     public boolean add(Dept dept) {
         return deptDao.addDept(dept);
     }
 
-    @Override
     public Dept get(long id) {
         return deptDao.findById(id);
     }
 
-    @Override
     public List<Dept> list() {
         return deptDao.finfAll();
     }

@@ -76,6 +76,7 @@
         <module>api</module>
         <module>provider-dept</module>
         <module>consumer-dept</module>
+        <module>consumer-dept-feign</module>
         <module>eureka</module>
         <module>eureka2</module>
         <module>eureka3</module>
