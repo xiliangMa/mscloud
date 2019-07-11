@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Accessors(chain=true)
 public class Dept implements Serializable {
-    private Long deptNo;
+    private Long dNo;
     private String dName;
     private String dbSource;
 
@@ -22,6 +22,6 @@ public class Dept implements Serializable {
 
     public static void main(String[] args) {
         Dept dept = new Dept();
-        dept.setDName("虚拟化").setDeptNo(11l).setDbSource("DB1");
+        dept.setDName("虚拟化").setDNo(11l).setDbSource("DB1");
     }
 }

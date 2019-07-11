@@ -17,13 +17,13 @@ public class DeptController {
     @Autowired
     private DeptService deptService;
 
-    @RequestMapping(value = "/dept/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/dept/add", method = RequestMethod.POST, produces = "application/json")
     public boolean add(@RequestBody Dept dept) {
         return deptService.add(dept);
     }
 
 
-    @RequestMapping(value = "/dept/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/dept/get/{id}", method = RequestMethod.GET, produces = "application/json")
     public Dept get(@PathVariable("id") Long id) {
         return deptService.get(id);
     }
