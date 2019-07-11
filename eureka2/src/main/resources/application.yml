@@ -9,6 +9,7 @@ eureka:
   instance:
     hostname: eureka-9091.com
     instance-id: eureka-9091
+    prefer-ip-address: true
   client:
     register-with-eureka: false
     fetch-registry: false
