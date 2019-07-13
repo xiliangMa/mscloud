@@ -38,5 +38,6 @@
 
     <modules>
         <module>eureka</module>
+        <module>provider-service</module>
     </modules>
 </project>

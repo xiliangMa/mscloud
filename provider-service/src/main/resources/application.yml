@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: provier-service
+
+server:
+  port: 8000
+
+eureka:
+  instance:
+    hostname: provier-service-8000
+  client:
+    service-url:
+      defaultZone: http://eureka-server-7000:7000/eureka
