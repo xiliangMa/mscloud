@@ -11,3 +11,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka-server-7000:7000/eureka
+
+# 开启feign 熔断器
+feign:
+  hystrix:
+    enabled: true
