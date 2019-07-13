@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
  */
 
 @Service
-public class ConsumerService {
+public class ConsumerRibbonService {
 
     private final static String URL = "http://PROVIER-SERVICE/provider/port";
 

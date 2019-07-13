@@ -40,5 +40,6 @@
         <module>eureka</module>
         <module>provider-service</module>
         <module>consumer-ribbon</module>
+        <module>consumer-feign</module>
     </modules>
 </project>

@@ -10,8 +10,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class ConsumerServiceApplication {
+public class ConsumerRibbonApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ConsumerServiceApplication.class, args);
+        SpringApplication.run(ConsumerRibbonApplication.class, args);
     }
 }

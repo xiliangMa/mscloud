@@ -1,13 +1,13 @@
 spring:
   application:
-    name: provider-service
+    name: consumer-service-feign
 
 server:
-  port: 8000
+  port: 9001
 
 eureka:
   instance:
-    hostname: provider-service-8000
+    hostname: consumer-service-feign-9001
   client:
     service-url:
       defaultZone: http://eureka-server-7000:7000/eureka
