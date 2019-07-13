@@ -39,5 +39,6 @@
     <modules>
         <module>eureka</module>
         <module>provider-service</module>
+        <module>consumer-ribbon</module>
     </modules>
 </project>

@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: consumer-service-ribbon
+
+server:
+  port: 9000
+
+eureka:
+  instance:
+    hostname: consumer-service-ribbon-9000
+  client:
+    service-url:
+      defaultZone: http://eureka-server-7000:7000/eureka
