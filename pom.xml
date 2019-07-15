@@ -41,5 +41,6 @@
         <module>provider-service</module>
         <module>consumer-ribbon</module>
         <module>consumer-feign</module>
+        <module>zuul</module>
     </modules>
 </project>

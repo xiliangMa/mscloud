@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: api-gateway
+
+server:
+  port: 5000
+
+eureka:
+  instance:
+    hostname: api-gateway-5000
+  client:
+    service-url:
+      defaultZone: http://eureka-server-7000:7000/eureka
+
+zuul:
+  routes:
+    api-feign:
+      path: /api/feign/**
+      serviceId: consumer-service-feign
+    api-ribbon:
+      path: /api/ribbon/**
+      serviceId: consumer-service-ribbon
