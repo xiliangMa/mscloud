@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      label: master
+      server:
+        git:
+          uri: https://github.com/xiliangMa/mscloud-config.git
+          search-paths: mscloud
+          username:
+          password:
+
+server:
+  port: 8888
+
+eureka:
+  instance:
+    hostname: config-service-8888
+  client:
+    service-url:
+      defaultZone: http://eureka-server-7000:7000/eureka
+
+

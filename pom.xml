@@ -42,5 +42,6 @@
         <module>consumer-ribbon</module>
         <module>consumer-feign</module>
         <module>zuul</module>
+        <module>config</module>
     </modules>
 </project>
