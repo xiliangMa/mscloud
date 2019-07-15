@@ -1,15 +1,21 @@
 spring:
   application:
     name: eureka-server
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: eureka-service #配置中心文件名称
+      label: master
+      profile: dev
 
-server:
-  port: 7000
-
-eureka:
-  instance:
-    hostname: eureka-server-7000
-  client:
-    service-url:
-      defaultZone: http://eureka-server-7000:7000/eureka
-    fetch-registry: false
-    register-with-eureka: false
+#server:
+#  port: 7000
+#
+#eureka:
+#  instance:
+#    hostname: eureka-server-7000
+#  client:
+#    service-url:
+#      defaultZone: http://eureka-server-7000:7000/eureka
+#    fetch-registry: false
+#    register-with-eureka: false
