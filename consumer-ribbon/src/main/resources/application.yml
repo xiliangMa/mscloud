@@ -2,7 +2,7 @@ spring:
   application:
     name: consumer-service-ribbon
   zipkin:
-    base-url: http://localhost:3000
+    base-url: http://localhost:8080
 
 server:
   port: 9000
