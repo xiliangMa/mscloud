@@ -2,11 +2,11 @@ spring:
   application:
     name: api-gateway
   zipkin:
-    base-url: http://localhost:8080
+    base-url: http://zipkin-service-3000:8080
   boot:
     admin:
       client:
-        url: http://localhost:2000
+        url: http://admin-service-2000:2000
 
 server:
   port: 5000
