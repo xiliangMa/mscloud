@@ -44,5 +44,6 @@
         <module>zuul</module>
         <module>config</module>
         <module>zipkin</module>
+        <module>admin</module>
     </modules>
 </project>

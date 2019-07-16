@@ -3,6 +3,10 @@ spring:
     name: consumer-service-feign
   zipkin:
     base-url: http://localhost:8080
+  boot:
+    admin:
+      client:
+        url: http://localhost:2000
 
 server:
   port: 9001
@@ -18,3 +22,12 @@ eureka:
 feign:
   hystrix:
     enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS

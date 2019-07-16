@@ -1,6 +1,10 @@
 spring:
   application:
     name: zipkin-service
+  boot:
+    admin:
+      client:
+        url: http://localhost:2000
 
 server:
   port: 3000
@@ -17,3 +21,10 @@ management:
     web:
       server:
         auto-time-requests: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
