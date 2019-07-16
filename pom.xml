@@ -43,5 +43,6 @@
         <module>consumer-feign</module>
         <module>zuul</module>
         <module>config</module>
+        <module>zipkin</module>
     </modules>
 </project>

@@ -1,6 +1,8 @@
 spring:
   application:
     name: config-service
+  zipkin:
+    base-url: http://localhost:8080
   cloud:
     config:
       label: master
