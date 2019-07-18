@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: consumer-service-ribbon
+  zipkin:
+    base-url: http://zipkin-service-3000:8080
+  boot:
+    admin:
+      client:
+        url: http://admin-service-2000:2000
+
+server:
+  port: 9000
+
+eureka:
+  instance:
+    hostname: consumer-service-ribbon-9000
+  client:
+    service-url:
+      defaultZone: http://eureka-server-7000:7000/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
