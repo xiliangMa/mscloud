@@ -1,0 +1,171 @@
+version: '3'
+services:
+  # -------- config --------
+  config:
+    restart: always
+    container_name: mscloud-config
+    image: xiliangma/mscloud-config:latest
+    ports:
+      - "8888:8888"
+    volumes:
+      - /tmp/mscloud/config/:/maslcoud/config
+
+
+  # -------- eureka cluster --------
+  eureka-1:
+    restart : always
+    container_name: mscloud-eureka-1
+    image: xiliangma/mscloud-eureka:latest
+    ports:
+      - "7000:7000"
+    volumes:
+      - /tmp/mscloud/eureka-1/:/maslcoud/eureka-1
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./eureka/entrypoint.sh:/mscloud/eureka/entrypoint.sh
+    depends_on:
+      - config
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "config:8888", "--strict", "--", "/mscloud/eureka/entrypoint.sh"]
+
+#  eureka-2:
+#    restart : always
+#    container_name: mscloud-eureka-2
+#    image: xiliangma/mscloud-eureka:latest
+#    ports:
+#      - "7001:7000"
+#    volumes:
+#      - /tmp/mscloud/eureka-2/:/maslcoud/eureka-2
+#      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+#      - ./eureka/entrypoint.sh:/mscloud/eureka/entrypoint.sh
+#    depends_on:
+#      - config
+#    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "config:8888", "--strict", "--", "/mscloud/eureka/entrypoint.sh"]
+#
+#
+#  eureka-3:
+#    restart : always
+#    container_name: mscloud-eureka-3
+#    image: xiliangma/mscloud-eureka:latest
+#    ports:
+#      - "7002:7000"
+#    volumes:
+#      - /tmp/mscloud/eureka-3/:/maslcoud/eureka-3
+#      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+#      - ./eureka/entrypoint.sh:/mscloud/eureka/entrypoint.sh
+#    depends_on:
+#      - config
+#    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "config:8888", "--strict", "--", "/mscloud/eureka/entrypoint.sh"]
+
+
+  # -------- provider --------
+  provider:
+    restart : always
+    container_name: mscloud_provider_service
+    image: xiliangma/mscloud-provider:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - /tmp/mscloud/provider/:/maslcoud/provider
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./provider-service/entrypoint.sh:/mscloud/provider-service/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/provider-service/entrypoint.sh"]
+
+
+  # -------- consumer ribbon --------
+  consumer-ribbon:
+    restart : always
+    container_name: mscloud-consumer-ribbon
+    image: xiliangma/mscloud-consumer-ribbon:latest
+    ports:
+      - "9000:9000"
+    volumes:
+      - /tmp/mscloud/consumer-ribbon/:/maslcoud/consumer-ribbon
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./consumer-ribbon/entrypoint.sh:/mscloud/consumer-ribbon/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+      - provider
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/consumer-ribbon/entrypoint.sh"]
+
+
+  # -------- consumer feign --------
+  consumer-feign:
+    restart : always
+    container_name: mscloud-consumer-feign
+    image: xiliangma/mscloud-consumer-feign:latest
+    ports:
+      - "9001:9001"
+    volumes:
+      - /tmp/mscloud/consumer-feign/:/maslcoud/consumer-feign
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./consumer-feign/entrypoint.sh:/mscloud/consumer-feign/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/consumer-feign/entrypoint.sh"]
+
+
+  # -------- zuul --------
+  zuul:
+    container_name: mscloud-zuul
+    image: xiliangma/mscloud-zuul:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - /tmp/mscloud/zuul/:/maslcoud/zuul
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./zuul/entrypoint.sh:/mscloud/zuul/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/zuul/entrypoint.sh"]
+
+
+  # -------- admin --------
+  admin:
+    container_name: mscloud-admin
+    image: xiliangma/mscloud-admin:latest
+    ports:
+      - "2000:2000"
+    volumes:
+      - /tmp/mscloud/admin/:/maslcoud/admin
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./admin/entrypoint.sh:/mscloud/admin/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/admin/entrypoint.sh"]
+
+
+
+  # -------- zipkin --------
+  zipkin:
+    container_name: mscloud-zipkin
+    image: xiliangma/mscloud-zipkin:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - /tmp/mscloud/zipkin/:/maslcoud/zipkin
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./zipkin/entrypoint.sh:/mscloud/zipkin/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+      - consumer-feign
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/zipkin/entrypoint.sh"]
+
