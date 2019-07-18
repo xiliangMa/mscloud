@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: provider-service
+  zipkin:
+    base-url: http://zipkin-service-3000:8080
+  boot:
+    admin:
+      client:
+        url: http://admin-service-2000:2000
+
+server:
+  port: 8000
+
+eureka:
+  instance:
+    hostname: provider-service-8000
+  client:
+    service-url:
+      defaultZone: http://eureka-server-7000:7000/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
