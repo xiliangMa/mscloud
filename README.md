@@ -19,8 +19,12 @@
  6. 服务网关 zuul
  7. 服务监控 admin
  8. 服务链路监控 zipkin
-
-
+ 
+# 容器化
+ 1. docker
+ 2. docker-compose
+ 3. kubernetes
+ 
 
  
  
