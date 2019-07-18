@@ -25,7 +25,7 @@ eureka:
     hostname: config-service-8888
   client:
     service-url:
-      defaultZone: http://eureka-server-7000:7000/eureka
+      defaultZone: http://eureka-server-7000:7000/eureka/, http://eureka-server-7001:7001/eureka/, http://eureka-server-7002:7002/eureka/
 
 management:
   endpoints:
