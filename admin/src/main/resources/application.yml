@@ -1,15 +1,9 @@
 spring:
   application:
     name: admin-service
-  zipkin:
-    base-url: http://zipkin-service-3000:8080
-
-server:
-  port: 2000
-
-eureka:
-  instance:
-    hostname: admin-service-2000
-  client:
-    service-url:
-      defaultZone: http://eureka-server-7000:7000/eureka
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: admin-service
+      label: master
+      profile: dev
