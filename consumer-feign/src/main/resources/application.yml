@@ -1,33 +1,9 @@
 spring:
   application:
     name: consumer-service-feign
-  zipkin:
-    base-url: http://zipkin-service-3000:8080
-  boot:
-    admin:
-      client:
-        url: http://admin-service-2000:2000
-
-server:
-  port: 9001
-
-eureka:
-  instance:
-    hostname: consumer-service-feign-9001
-  client:
-    service-url:
-      defaultZone: http://eureka-server-7000:7000/eureka
-
-# 开启feign 熔断器
-feign:
-  hystrix:
-    enabled: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: ALWAYS
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: consumer-service-feign
+      label: master
+      profile: dev
