@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: eureka-server
+  zipkin:
+    base-url: http://zipkin-service-3000:8080
+  boot:
+    admin:
+      client:
+        url: http://admin-service-2000:2000
+
+server:
+  port: 7000
+
+eureka:
+  instance:
+    hostname: eureka-server-7000
+  client:
+    service-url:
+      defaultZone: http://eureka-server-7000:7000/eureka
+    fetch-registry: false
+    register-with-eureka: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS

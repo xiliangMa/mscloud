@@ -1,42 +1,11 @@
 # 使用config 配置中心, 其他的微服也是一样，指定远端的配置文件即可
-#spring:
-#  application:
-#    name: eureka-server
-#  cloud:
-#    config:
-#      uri: http://localhost:8888
-#      name: eureka-service #配置中心文件名称
-#      label: master
-#      profile: dev
-
-# 采用本地配置
 spring:
   application:
     name: eureka-server
-  zipkin:
-    base-url: http://zipkin-service-3000:8080
-  boot:
-    admin:
-      client:
-        url: http://admin-service-2000:2000
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: eureka-service #配置中心文件名称
+      label: master
+      profile: dev
 
-server:
-  port: 7000
-
-eureka:
-  instance:
-    hostname: eureka-server-7000
-  client:
-    service-url:
-      defaultZone: http://eureka-server-7000:7000/eureka
-    fetch-registry: false
-    register-with-eureka: false
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: ALWAYS
