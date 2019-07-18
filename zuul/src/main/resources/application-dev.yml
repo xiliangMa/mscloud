@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: api-gateway
+  zipkin:
+    base-url: http://zipkin-service-3000:8080
+  boot:
+    admin:
+      client:
+        url: http://admin-service-2000:2000
+
+server:
+  port: 5000
+
+eureka:
+  instance:
+    hostname: api-gateway-5000
+  client:
+    service-url:
+      defaultZone: http://eureka-server-7000:7000/eureka
+
+zuul:
+  routes:
+    api-feign:
+      path: /api/feign/**
+      serviceId: consumer-service-feign
+    api-ribbon:
+      path: /api/ribbon/**
+      serviceId: consumer-service-ribbon
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
