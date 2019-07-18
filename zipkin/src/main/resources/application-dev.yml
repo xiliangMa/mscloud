@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: zipkin-service
+  boot:
+    admin:
+      client:
+        url: http://admin-service-2000:2000
+
+server:
+  port: 3000
+
+eureka:
+  instance:
+    hostname: zipkin-service-3000
+  client:
+    service-url:
+      defaultZone: http://eureka-server-7000:7000/eureka
+
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
