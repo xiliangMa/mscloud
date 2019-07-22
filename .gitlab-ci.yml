@@ -63,6 +63,7 @@ package:
     - master
   script:
     - mkdir -p $SOURCE_PATH
+    - ln -s `pwd` $SOURCE_PATH/mscloud
     - cd $SOURCE_PATH/mscloud
     - mvn clean
     - mvn package
