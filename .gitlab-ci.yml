@@ -2,7 +2,7 @@ variables:
   resitry: cloud.docker.com
   user: xiliangma
   pwd: maxiliang4115
-  image: xiliangma/restapi
+  image: xiliangma/mscloud
   tag: latest
   sourcepath: /tmp/source/
   deployFile: docker-compose.yml
@@ -22,6 +22,7 @@ variables:
 
 stages:
   - package
+  - build
 
 package:
   stage: package
@@ -36,29 +37,28 @@ package:
     - mvn test
     - mvn package
     - mkdir -p $PACKAGE/$ADMIN_MOUDULE
-#    - cp $ADMIN_PATH $CONFIG_PATH $RIBBON_PATH $FEIGN_PATH $EUREKA_PATH $PROVIDER_PATH $ZIPKIN_PATH $ZUUL_PATH ./package
     - cp $ADMIN_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$ADMIN_MOUDULE/
     - cp $ADMIN_MOUDULE/Dockerfile $PACKAGE/$ADMIN_MOUDULE/
-#  artifacts:
-#    paths:
-#      - package
+  artifacts:
+    paths:
+      - $PACKAGE
 
-#buid-docker-image:
-#  stage: publish
-#  image: docker:latest
-#  services:
-#    - docker:dind
-#  only:
-#    - master
-#  dependencies:
-#    - go-build
-#  script:
-#    #change your docker hub user name and pwd
+buid:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  only:
+    - master
+  dependencies:
+    - package
+  script:
 #    - docker login -u user -p pwd
-#    - docker build -t $image:$tag .
+    - docker build -f $PACKAGE/$ADMIN_MOUDULE/Dockerfile -t $image:$tag .
+    - docker images
 #    - docker push $image:$tag
-#    - echo "build success $image:$tag"
-#
+    - echo "build success $image:$tag"
+
 #deploy:
 #  stage: deploy
 #  image: $image:$tag
