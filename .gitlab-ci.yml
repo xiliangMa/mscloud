@@ -22,32 +22,32 @@ variables:
   ADMIN_VERSION: mscloud-admin
 
   CONFIG_MOUDULE: config
-  CONFIG_JAT: config-0.0.1-SNAPSHOT.jar
+  CONFIG_JAR: config-0.0.1-SNAPSHOT.jar
   CONFIG_VERSION: mscloud-config
 
 
   RIBBON_MOUDULE: consumer-ribbon
-  RIBBON_JAT: consumer-ribbon-0.0.1-SNAPSHOT.jar
+  RIBBON_JAR: consumer-ribbon-0.0.1-SNAPSHOT.jar
   RIBBON_VERSION: mscloud-consumer-ribbon
 
 
   FEIGN_MOUDULE: consumer-feign
-  FEIGN_JAT: consumer-feign-0.0.1-SNAPSHOT.jar
+  FEIGN_JAR: consumer-feign-0.0.1-SNAPSHOT.jar
   FEIGN_VERSION: mscloud-consumer-feign
 
 
   PROVIDER_MOUDULE: provider-service
-  PROVIDER_JAT: provider-service-0.0.1-SNAPSHOT.jar
+  PROVIDER_JAR: provider-service-0.0.1-SNAPSHOT.jar
   PROVIDER_VERSION: mscloud-provider
 
 
   ZIPKIN_MOUDULE: zipkin
-  ZIPKIN_JAT: zipkin-0.0.1-SNAPSHOT.jar
+  ZIPKIN_JAR: zipkin-0.0.1-SNAPSHOT.jar
   ZIPKIN_VERSION: mscloud-zipkin
 
 
   ZUUL_MOUDULE: zuul
-  ZUUL_JAT: zuul-0.0.1-SNAPSHOT.jar
+  ZUUL_JAR: zuul-0.0.1-SNAPSHOT.jar
   ZUUL_VERSION: mscloud-zuul
 
 
