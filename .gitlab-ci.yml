@@ -1,51 +1,108 @@
 variables:
-  resitry: cloud.docker.com
-  user: xiliangma
-  pwd: maxiliang4115
-  image: xiliangma/mscloud
-  tag: latest
-  sourcepath: /tmp/source/
-  deployFile: docker-compose.yml
+  # ----------- docker -----------
+  REGISTRY: cloud.docker.com
+  USER: xiliangma
+  PWD: maxiliang4115
+  IMAGE: xiliangma
+  TAG: latest
 
+
+  # ----------- deploy -----------
+  DOCKER_CONPOSEM_FILE: docker-compose.yml
+
+
+  # ----------- mscloud -----------
+  SOURCE_PATH: /tmp/source/
   PACKAGE: package
   TARGET: target
+
+  # ----------- mscloud module -----------
   ADMIN_MOUDULE: admin
   ADMIN_JAR: admin-0.0.1-SNAPSHOT.jar
+  ADMIN_VERSION: mscloud-admin
 
-#  CONFIG_PATH: config/target/config-0.0.1-SNAPSHOT.jar
-#  RIBBON_PATH: config/target/consumer-ribbon-0.0.1-SNAPSHOT.jar
-#  FEIGN_PATH: config/target/consumer-feign-0.0.1-SNAPSHOT.jar
-#  EUREKA_PATH: config/target/eureka-0.0.1-SNAPSHOT.jar
-#  PROVIDER_PATH: config/target/provider-service-0.0.1-SNAPSHOT.jar
-#  ZIPKIN_PATH: config/target/zipkin-0.0.1-SNAPSHOT.jar
-#  ZUUL_PATH: config/target/zuul-0.0.1-SNAPSHOT.jar
+  CONFIG_MOUDULE: config
+  CONFIG_JAT: config-0.0.1-SNAPSHOT.jar
+  CONFIG_VERSION: mscloud-config
 
-stages:
+
+  RIBBON_MOUDULE: consumer-ribbon
+  RIBBON_JAT: consumer-ribbon-0.0.1-SNAPSHOT.jar
+  RIBBON_VERSION: mscloud-consumer-ribbon
+
+
+  FEIGN_MOUDULE: consumer-feign
+  FEIGN_JAT: consumer-feign-0.0.1-SNAPSHOT.jar
+  FEIGN_VERSION: mscloud-consumer-feign
+
+
+  PROVIDER_MOUDULE: provider-service
+  PROVIDER_JAT: provider-service-0.0.1-SNAPSHOT.jar
+  PROVIDER_VERSION: mscloud-provider
+
+
+  ZIPKIN_MOUDULE: zipkin
+  ZIPKIN_JAT: zipkin-0.0.1-SNAPSHOT.jar
+  ZIPKIN_VERSION: mscloud-zipkin
+
+
+  ZUUL_MOUDULE: zuul
+  ZUUL_JAT: zuul-0.0.1-SNAPSHOT.jar
+  ZUUL_VERSION: mscloud-zuul
+
+
+
+sTAGes:
   - package
   - build
 
 package:
-  stage: package
+  sTAGe: package
   image: maven:3.3-jdk-8
   only:
     - master
   script:
-    - mkdir -p $sourcepath
-    - ln -s `pwd` $sourcepath/mscloud
-    - cd $sourcepath/mscloud
+    - mkdir -p $SOURCE_PATH
+    - cd $SOURCE_PATH/mscloud
     - mvn clean
-    - mvn test
     - mvn package
+    - echo "创建module目录。。。"
     - mkdir -p $PACKAGE/$ADMIN_MOUDULE
     - mkdir -p $PACKAGE/$ADMIN_MOUDULE/$TARGET
+    - mkdir -p $PACKAGE/$CONFIG_MOUDULE
+    - mkdir -p $PACKAGE/$CONFIG_MOUDULE/$TARGET
+    - mkdir -p $PACKAGE/$RIBBON_MOUDULE
+    - mkdir -p $PACKAGE/$RIBBON_MOUDULE/$TARGET
+    - mkdir -p $PACKAGE/$FEIGN_MOUDULE
+    - mkdir -p $PACKAGE/$FEIGN_MOUDULE/$TARGET
+    - mkdir -p $PACKAGE/$PROVIDER_MOUDULE
+    - mkdir -p $PACKAGE/$PROVIDER_MOUDULE/$TARGET
+    - mkdir -p $PACKAGE/$ZIPKIN_MOUDULE
+    - mkdir -p $PACKAGE/$ZIPKIN_MOUDULE/$TARGET
+    - mkdir -p $PACKAGE/$ZUUL_MOUDULE
+    - mkdir -p $PACKAGE/$ZUUL_MOUDULE/$TARGET
+    - echo "复制 Dockefile、各模块jar包。。。。"
     - cp $ADMIN_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$ADMIN_MOUDULE/$TARGET
     - cp $ADMIN_MOUDULE/Dockerfile $PACKAGE/$ADMIN_MOUDULE/
+    - cp $CONFIG_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$CONFIG_MOUDULE/$TARGET
+    - cp $CONFIG_MOUDULE/Dockerfile $PACKAGE/$CONFIG_MOUDULE/
+    - cp $RIBBON_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$RIBBON_MOUDULE/$TARGET
+    - cp $RIBBON_MOUDULE/Dockerfile $PACKAGE/$RIBBON_MOUDULE/
+    - cp $FEIGN_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$FEIGN_MOUDULE/$TARGET
+    - cp $FEIGN_MOUDULE/Dockerfile $PACKAGE/$FEIGN_MOUDULE/
+    - cp $PROVIDER_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$PROVIDER_MOUDULE/$TARGET
+    - cp $PROVIDER_MOUDULE/Dockerfile $PACKAGE/$PROVIDER_MOUDULE/
+    - cp $ZIPKIN_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$ZIPKIN_MOUDULE/$TARGET
+    - cp $ZIPKIN_MOUDULE/Dockerfile $PACKAGE/$ZIPKIN_MOUDULE/
+    - cp $ZUUL_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$ZUUL_MOUDULE/$TARGET
+    - cp $ZUUL_MOUDULE/Dockerfile $PACKAGE/$ZUUL_MOUDULE/
   artifacts:
     paths:
       - $PACKAGE
 
+
 buid:
-  stage: build
+  sTAGe: build
   image: docker:latest
   services:
     - docker:dind
@@ -53,18 +110,55 @@ buid:
     - master
   dependencies:
     - package
+  before_script:
+    - docker login -u $USER -p $PWD
   script:
-#    - docker login -u user -p pwd
+    - echo "build ----------- $ADMIN_MOUDULE -----------"
     - cd $PACKAGE/$ADMIN_MOUDULE
-    - docker build -t $image:$tag .
-    - docker images
+    - docker build -t $IMAGE/$ADMIN_VERSION:$TAG .
+#    - docker push $IMAGE/$ADMIN_VERSION:$TAG
     - cd -
-#    - docker push $image:$tag
-    - echo "build success $image:$tag"
+    - echo "build success  ----------- mscloud ----------- $IMAGE/$ADMIN_MOUDULE:$TAG"
+    - echo "build ----------- $CONFIG_MOUDULE -----------"
+    - cd $PACKAGE/$CONFIG_MOUDULE
+    - docker build -t $IMAGE/$CONFIG_MOUDULE:$TAG .
+#    - docker push $IMAGE:$TAG
+    - cd -
+    - echo "build success  ----------- mscloud ----------- $IMAGE/$CONFIG_MOUDULE:$TAG"
+    - echo "build ----------- $RIBBON_MOUDULE -----------"
+    - cd $PACKAGE/$RIBBON_MOUDULE
+    - docker build -t $IMAGE/$RIBBON_MOUDULE:$TAG .
+#    - docker push $IMAGE:$TAG
+    - cd -
+    - echo "build success  ----------- mscloud ----------- $IMAGE/$RIBBON_MOUDULE:$TAG"
+    - echo "build ----------- $FEIGN_MOUDULE -----------"
+    - cd $PACKAGE/$CONFIG_MOUDULE
+    - docker build -t $IMAGE/$FEIGN_MOUDULE:$TAG .
+#    - docker push $IMAGE:$TAG
+    - cd -
+    - echo "build success  ----------- mscloud ----------- $IMAGE/$FEIGN_MOUDULE:$TAG"
+    - echo "build ----------- mscloud ----------- $PROVIDER_MOUDULE 。。。"
+    - cd $PACKAGE/$PROVIDER_MOUDULE
+    - docker build -t $IMAGE/$PROVIDER_MOUDULE:$TAG .
+#    - docker push $IMAGE:$TAG
+    - cd -
+    - echo "build success  ----------- mscloud ----------- $IMAGE/$CONFIG_MOUDULE:$TAG"
+    - echo "build ----------- $ZIPKIN_MOUDULE -----------"
+    - cd $PACKAGE/$CONFIG_MOUDULE
+    - docker build -t $IMAGE/$ZIPKIN_MOUDULE:$TAG .
+#    - docker push $IMAGE:$TAG
+    - cd -
+    - echo "build success  ----------- mscloud ----------- $IMAGE/$ZIPKIN_MOUDULE:$TAG"
+    - echo "build ----------- $ZUUL_MOUDULE -----------"
+    - cd $PACKAGE/$CONFIG_MOUDULE
+    - docker build -t $IMAGE/$ZUUL_MOUDULE:$TAG .
+#    - docker push $IMAGE:$TAG
+    - cd -
+    - echo "build success  ----------- mscloud ----------- $IMAGE/$ZUUL_MOUDULE:$TAG"
 
 #deploy:
-#  stage: deploy
-#  image: $image:$tag
+#  sTAGe: deploy
+#  IMAGE: $IMAGE:$TAG
 #  script:
 #    - cat $deployFile
 #    - docker-compose up -d
