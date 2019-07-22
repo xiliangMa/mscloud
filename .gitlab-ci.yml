@@ -52,12 +52,12 @@ variables:
 
 
 
-sTAGes:
+stages:
   - package
   - build
 
 package:
-  sTAGe: package
+  stage: package
   image: maven:3.3-jdk-8
   only:
     - master
@@ -102,7 +102,7 @@ package:
 
 
 buid:
-  sTAGe: build
+  stage: build
   image: docker:latest
   services:
     - docker:dind
