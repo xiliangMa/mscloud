@@ -111,8 +111,8 @@ buid:
     - master
   dependencies:
     - package
-  before_script:
-    - docker login -u $USER -p $PWD
+#  before_script:
+#    - docker login -u $USER -p $PWD
   script:
     - echo "build ----------- $ADMIN_MOUDULE -----------"
     - cd $PACKAGE/$ADMIN_MOUDULE
