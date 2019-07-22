@@ -2,7 +2,7 @@ variables:
   # ----------- docker -----------
   REGISTRY: cloud.docker.com
   USER: xiliangma
-  PWD: maxiliang4115
+  PASSWORD: maxiliang4115
   IMAGE: xiliangma
   TAG: latest
 
@@ -112,8 +112,8 @@ buid:
   dependencies:
     - package
   before_script:
-    - echo $USER $PWD
-    - docker login -u $USER -p $PWD
+    - echo $USER $PASSWORD
+    - docker login -u $USER -p $PASSWORD
   script:
     - echo "build ----------- 1. $ADMIN_MOUDULE -----------"
 #    - cd $PACKAGE/$ADMIN_MOUDULE
