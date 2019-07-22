@@ -12,7 +12,7 @@ variables:
 
 
   # ----------- mscloud -----------
-  SOURCE_PATH: /tmp/source/
+  SOURCE_PATH: /tmp/source
   PACKAGE: package
   TARGET: target
 
