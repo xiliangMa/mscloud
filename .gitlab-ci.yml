@@ -112,7 +112,7 @@ buid:
   dependencies:
     - package
   before_script:
-    - docker login -u $USER -p $PWD
+    - docker login -u "$USER" -p "$PWD"
   script:
     - echo "build ----------- 1. $ADMIN_MOUDULE -----------"
 #    - cd $PACKAGE/$ADMIN_MOUDULE
