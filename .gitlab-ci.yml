@@ -168,5 +168,7 @@ stages:
 
 deploy:
   stage: deploy
+  image: docker:latest
   script:
     - docker-compose up -d
+    - docker-compose ps
