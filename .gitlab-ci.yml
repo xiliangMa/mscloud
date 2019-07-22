@@ -1,0 +1,21 @@
+variables:
+  resitry: cloud.docker.com
+  user: xiliangma
+  pwd: maxiliang4115
+  image: xiliangma/restapi
+  tag: latest
+  sourcepath: /tmp/source/mscloud
+  deployFile: docker-compose.yml
+
+stages:
+  - package
+
+package:
+  stage: package
+  image: maven:3.3-jdk-8
+  only:
+    - master
+  script:
+    - mkdir -p $sourcepath
+    - cd $sourcepath
+    - mvn clean
