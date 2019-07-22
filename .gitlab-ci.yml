@@ -55,8 +55,10 @@ buid:
     - package
   script:
 #    - docker login -u user -p pwd
-    - docker build -f $PACKAGE/$ADMIN_MOUDULE/Dockerfile -t $image:$tag .
+    - cd $PACKAGE/$ADMIN_MOUDULE
+    - docker build Dockerfile -t $image:$tag .
     - docker images
+    - cd -
 #    - docker push $image:$tag
     - echo "build success $image:$tag"
 
