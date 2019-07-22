@@ -169,8 +169,12 @@ stages:
 deploy:
   stage: deploy
   image: docker:latest
+  before_script:
+    - docker info
+    - apk update
+    - apk upgrade
+    - apk add python python-dev py-pip build-base
+    - pip install docker-compose
   script:
-    - pwd
-    - ls
     - docker-compose up -d
     - docker-compose ps
