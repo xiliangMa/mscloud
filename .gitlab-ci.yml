@@ -53,18 +53,18 @@ variables:
 
 
 stages:
-#  - package
+  - package
   - build
 
-#package:
-#  stage: package
-#  image: maven:3.3-jdk-8
-#  only:
-#    - master
-#  script:
-#    - mkdir -p $SOURCE_PATH
-#    - ln -s `pwd` $SOURCE_PATH/mscloud
-#    - cd $SOURCE_PATH/mscloud
+package:
+  stage: package
+  image: maven:3.3-jdk-8
+  only:
+    - master
+  script:
+    - mkdir -p $SOURCE_PATH
+    - ln -s `pwd` $SOURCE_PATH/mscloud
+    - cd $SOURCE_PATH/mscloud
 #    - mvn clean
 #    - mvn package
 #    - echo "创建module目录。。。"
@@ -109,12 +109,12 @@ buid:
     - docker:dind
   only:
     - master
-#  dependencies:
-#    - package
+  dependencies:
+    - package
   before_script:
     - docker login -u $USER -p $PWD
-#  script:
-#    - echo "build ----------- 1. $ADMIN_MOUDULE -----------"
+  script:
+    - echo "build ----------- 1. $ADMIN_MOUDULE -----------"
 #    - cd $PACKAGE/$ADMIN_MOUDULE
 #    - docker build -t $IMAGE/$ADMIN_VERSION:$TAG .
 ##    - docker push $IMAGE/$ADMIN_VERSION:$TAG
