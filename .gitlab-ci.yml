@@ -109,8 +109,8 @@ buid:
     - docker:dind
   only:
     - master
-  dependencies:
-    - package
+#  dependencies:
+#    - package
   before_script:
     - docker login -u $USER -p $PWD
 #  script:
