@@ -4,11 +4,13 @@ variables:
   pwd: maxiliang4115
   image: xiliangma/restapi
   tag: latest
-  sourcepath: /tmp/source/mscloud
+  sourcepath: /tmp/source/
   deployFile: docker-compose.yml
 
 stages:
   - package
+#  - publish
+#  - deploy
 
 package:
   stage: package
@@ -17,5 +19,6 @@ package:
     - master
   script:
     - mkdir -p $sourcepath
-    - cd $sourcepath
+    - ln -s `pwd` $sourcepath/mscloud
+    - cd $sourcepath/mscloud
     - mvn clean
