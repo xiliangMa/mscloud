@@ -170,5 +170,7 @@ deploy:
   stage: deploy
   image: docker:latest
   script:
+    - pwd
+    - ls
     - docker-compose up -d
     - docker-compose ps
