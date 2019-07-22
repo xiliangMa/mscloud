@@ -7,10 +7,21 @@ variables:
   sourcepath: /tmp/source/
   deployFile: docker-compose.yml
 
+  PACKAGE: package
+  TARGET: target
+  ADMIN_MOUDULE: admin
+  ADMIN_JAR: admin-0.0.1-SNAPSHOT.jar
+
+#  CONFIG_PATH: config/target/config-0.0.1-SNAPSHOT.jar
+#  RIBBON_PATH: config/target/consumer-ribbon-0.0.1-SNAPSHOT.jar
+#  FEIGN_PATH: config/target/consumer-feign-0.0.1-SNAPSHOT.jar
+#  EUREKA_PATH: config/target/eureka-0.0.1-SNAPSHOT.jar
+#  PROVIDER_PATH: config/target/provider-service-0.0.1-SNAPSHOT.jar
+#  ZIPKIN_PATH: config/target/zipkin-0.0.1-SNAPSHOT.jar
+#  ZUUL_PATH: config/target/zuul-0.0.1-SNAPSHOT.jar
+
 stages:
   - package
-#  - publish
-#  - deploy
 
 package:
   stage: package
@@ -22,3 +33,35 @@ package:
     - ln -s `pwd` $sourcepath/mscloud
     - cd $sourcepath/mscloud
     - mvn clean
+    - mvn test
+    - mvn package
+    - mkdir -p $PACKAGE/$ADMIN_MOUDULE
+#    - cp $ADMIN_PATH $CONFIG_PATH $RIBBON_PATH $FEIGN_PATH $EUREKA_PATH $PROVIDER_PATH $ZIPKIN_PATH $ZUUL_PATH ./package
+    - cp $ADMIN_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$ADMIN_MOUDULE/
+    - cp $ADMIN_MOUDULE/Dockerfile $PACKAGE/$ADMIN_MOUDULE/
+#  artifacts:
+#    paths:
+#      - package
+
+#buid-docker-image:
+#  stage: publish
+#  image: docker:latest
+#  services:
+#    - docker:dind
+#  only:
+#    - master
+#  dependencies:
+#    - go-build
+#  script:
+#    #change your docker hub user name and pwd
+#    - docker login -u user -p pwd
+#    - docker build -t $image:$tag .
+#    - docker push $image:$tag
+#    - echo "build success $image:$tag"
+#
+#deploy:
+#  stage: deploy
+#  image: $image:$tag
+#  script:
+#    - cat $deployFile
+#    - docker-compose up -d
