@@ -56,7 +56,7 @@ buid:
   script:
 #    - docker login -u user -p pwd
     - cd $PACKAGE/$ADMIN_MOUDULE
-    - docker build Dockerfile -t $image:$tag .
+    - docker build -t $image:$tag .
     - docker images
     - cd -
 #    - docker push $image:$tag
