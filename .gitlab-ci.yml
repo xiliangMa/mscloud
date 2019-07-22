@@ -124,43 +124,43 @@ buid:
 
     - echo "build ----------- 2. $CONFIG_MOUDULE -----------"
     - cd $PACKAGE/$CONFIG_MOUDULE
-    - docker build -t $IMAGE/$CONFIG_MOUDULE:$TAG .
+    - docker build -t $IMAGE/$CONFIG_VERSION:$TAG .
     - docker push $IMAGE/$CONFIG_VERSION:$TAG
     - cd -
     - echo "build success $IMAGE/$CONFIG_VERSION:$TAG"
 
     - echo "build ----------- 3. $RIBBON_MOUDULE -----------"
     - cd $PACKAGE/$RIBBON_MOUDULE
-    - docker build -t $IMAGE/$RIBBON_MOUDULE:$TAG .
+    - docker build -t $IMAGE/$RIBBON_VERSION:$TAG .
     - docker push $IMAGE/$RIBBON_VERSION:$TAG
     - cd -
     - echo "build success $IMAGE/$RIBBON_VERSION:$TAG"
 
     - echo "build ----------- 4. $FEIGN_MOUDULE -----------"
     - cd $PACKAGE/$FEIGN_MOUDULE
-    - docker build -t $IMAGE/$FEIGN_MOUDULE:$TAG .
+    - docker build -t $IMAGE/$FEIGN_VERSION:$TAG .
     - docker push $IMAGE/$FEIGN_VERSION:$TAG
     - cd -
     - echo "build success $IMAGE/$FEIGN_VERSION:$TAG"
 
     - echo "build ----------- 5. $PROVIDER_MOUDULE -----------"
     - cd $PACKAGE/$PROVIDER_MOUDULE
-    - docker build -t $IMAGE/$PROVIDER_MOUDULE:$TAG .
+    - docker build -t $IMAGE/$PROVIDER_VERSION:$TAG .
     - docker push $IMAGE/$PROVIDER_VERSION:$TAG
     - cd -
     - echo "build success $IMAGE/$PROVIDER_VERSION:$TAG"
 
     - echo "build ----------- 6. $ZIPKIN_MOUDULE -----------"
-    - cd $PACKAGE/$CONFIG_MOUDULE
-    - docker build -t $IMAGE/$ZIPKIN_MOUDULE:$TAG .
+    - cd $PACKAGE/$ZIPKIN_MOUDULE
+    - docker build -t $IMAGE/$ZIPKIN_VERSION:$TAG .
     - docker push $IMAGE/$ZIPKIN_VERSION:$TAG
     - cd -
     - echo "build success $IMAGE/$ZIPKIN_VERSION:$TAG"
 
     - echo "build ----------- 7. $ZUUL_MOUDULE -----------"
-    - cd $PACKAGE/$CONFIG_MOUDULE
-    - docker build -t $IMAGE/$ZUUL_MOUDULE:$TAG .
-    - docker push $IMAGE/ZUUL_VERSION:$TAG
+    - cd $PACKAGE/$ZUUL_MOUDULE
+    - docker build -t $IMAGE/$ZUUL_VERSION:$TAG .
+    - docker push $IMAGE/$ZUUL_VERSION:$TAG
     - cd -
     - echo "build success $IMAGE/$ZUUL_VERSION:$TAG"
     - docker images
