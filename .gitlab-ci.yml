@@ -37,7 +37,8 @@ package:
     - mvn test
     - mvn package
     - mkdir -p $PACKAGE/$ADMIN_MOUDULE
-    - cp $ADMIN_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$ADMIN_MOUDULE/
+    - mkdir -p $PACKAGE/$ADMIN_MOUDULE/$TARGET
+    - cp $ADMIN_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$ADMIN_MOUDULE/$TARGET
     - cp $ADMIN_MOUDULE/Dockerfile $PACKAGE/$ADMIN_MOUDULE/
   artifacts:
     paths:
