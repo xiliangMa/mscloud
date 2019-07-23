@@ -76,6 +76,8 @@ package:
     - mkdir -p $PACKAGE/$ADMIN_MOUDULE/$TARGET
     - mkdir -p $PACKAGE/$CONFIG_MOUDULE
     - mkdir -p $PACKAGE/$CONFIG_MOUDULE/$TARGET
+    - mkdir -p $PACKAGE/$EUREKA_MOUDULE
+    - mkdir -p $PACKAGE/$EUREKA_MOUDULE/$TARGET
     - mkdir -p $PACKAGE/$RIBBON_MOUDULE
     - mkdir -p $PACKAGE/$RIBBON_MOUDULE/$TARGET
     - mkdir -p $PACKAGE/$FEIGN_MOUDULE
