@@ -184,6 +184,9 @@ deploy:
 #    - apk update
 #    - rc-update add docker boot
 #    - service docker restart
+    - mkdir -p $SOURCE_PATH
+    - ln -s `pwd` $SOURCE_PATH/mscloud
+    - cd $SOURCE_PATH/mscloud
     - docker-compose version
   script:
     - docker-compose up -d
