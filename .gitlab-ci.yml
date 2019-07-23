@@ -1,7 +1,7 @@
 variables:
   # ----------- docker -----------
-  DOCKER_HOST: tcp://127.0.0.1:2375/
-  DOCKER_DRIVER: overlay2
+#  DOCKER_HOST: tcp://127.0.0.1:2375/
+#  DOCKER_DRIVER: overlay2
   REGISTRY: cloud.docker.com
   USER: xiliangma
   PASSWORD: maxiliang4115
@@ -179,6 +179,7 @@ deploy:
     - apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
     - docker-compose version
+    - gpasswd -a ${USER} docker
   script:
     - docker-compose up -d
     - docker-compose ps
