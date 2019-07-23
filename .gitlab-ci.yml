@@ -179,6 +179,7 @@ deploy:
 #    - apk upgrade
 #    - apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make sudo
 #    - pip install docker-compose
+    - apk add service
     - service docker restart
     - docker ps
   script:
