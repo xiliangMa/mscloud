@@ -1,191 +1,171 @@
-variables:
-  # ----------- docker -----------
-#  DOCKER_HOST: tcp://docker:2375/
-  DOCKER_DRIVER: overlay2
-#  DOCKER_TLS_CERTDIR: ""
-  REGISTRY: cloud.docker.com
-  USER: xiliangma
-  PASSWORD: maxiliang4115
-  IMAGE: xiliangma
-  TAG: latest
+version: '3'
+services:
+  # -------- config --------
+  config:
+    restart: always
+    container_name: mscloud-config
+    image: xiliangma/mscloud-config:latest
+    ports:
+      - "8888:8888"
+    volumes:
+      - /tmp/mscloud/config/:/maslcoud/config
 
 
-  # ----------- deploy -----------
-  DOCKER_COMPOSEM_FILE: docker-compose.yml
+  # -------- eureka cluster --------
+  eureka-1:
+    restart : always
+    container_name: mscloud-eureka-1
+    image: xiliangma/mscloud-eureka:latest
+    ports:
+      - "7000:7000"
+    volumes:
+      - /tmp/mscloud/eureka-1/:/maslcoud/eureka-1
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./eureka/entrypoint.sh:/mscloud/eureka/entrypoint.sh
+    depends_on:
+      - config
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "config:8888", "--strict", "--", "/mscloud/eureka/entrypoint.sh"]
 
-
-  # ----------- mscloud -----------
-  SOURCE_PATH: /tmp/source
-  PACKAGE: package
-  TARGET: target
-
-  # ----------- mscloud module -----------
-  ADMIN_MOUDULE: admin
-  ADMIN_JAR: admin-0.0.1-SNAPSHOT.jar
-  ADMIN_VERSION: mscloud-admin
-
-  CONFIG_MOUDULE: config
-  CONFIG_JAR: config-0.0.1-SNAPSHOT.jar
-  CONFIG_VERSION: mscloud-config
-
-
-  RIBBON_MOUDULE: consumer-ribbon
-  RIBBON_JAR: consumer-ribbon-0.0.1-SNAPSHOT.jar
-  RIBBON_VERSION: mscloud-consumer-ribbon
-
-
-  FEIGN_MOUDULE: consumer-feign
-  FEIGN_JAR: consumer-feign-0.0.1-SNAPSHOT.jar
-  FEIGN_VERSION: mscloud-consumer-feign
-
-
-  PROVIDER_MOUDULE: provider-service
-  PROVIDER_JAR: provider-service-0.0.1-SNAPSHOT.jar
-  PROVIDER_VERSION: mscloud-provider
-
-
-  ZIPKIN_MOUDULE: zipkin
-  ZIPKIN_JAR: zipkin-0.0.1-SNAPSHOT.jar
-  ZIPKIN_VERSION: mscloud-zipkin
-
-
-  ZUUL_MOUDULE: zuul
-  ZUUL_JAR: zuul-0.0.1-SNAPSHOT.jar
-  ZUUL_VERSION: mscloud-zuul
-
-
-
-stages:
-#  - package
-#  - build
-  - deploy
-
-#package:
-#  stage: package
-#  image: maven:3.3-jdk-8
-#  only:
-#    - master
-#  script:
-#    - mkdir -p $SOURCE_PATH
-#    - ln -s `pwd` $SOURCE_PATH/mscloud
-#    - cd $SOURCE_PATH/mscloud
-#    - mvn clean
-#    - mvn package
-#    - echo "创建module目录。。。"
-#    - mkdir -p $PACKAGE/$ADMIN_MOUDULE
-#    - mkdir -p $PACKAGE/$ADMIN_MOUDULE/$TARGET
-#    - mkdir -p $PACKAGE/$CONFIG_MOUDULE
-#    - mkdir -p $PACKAGE/$CONFIG_MOUDULE/$TARGET
-#    - mkdir -p $PACKAGE/$RIBBON_MOUDULE
-#    - mkdir -p $PACKAGE/$RIBBON_MOUDULE/$TARGET
-#    - mkdir -p $PACKAGE/$FEIGN_MOUDULE
-#    - mkdir -p $PACKAGE/$FEIGN_MOUDULE/$TARGET
-#    - mkdir -p $PACKAGE/$PROVIDER_MOUDULE
-#    - mkdir -p $PACKAGE/$PROVIDER_MOUDULE/$TARGET
-#    - mkdir -p $PACKAGE/$ZIPKIN_MOUDULE
-#    - mkdir -p $PACKAGE/$ZIPKIN_MOUDULE/$TARGET
-#    - mkdir -p $PACKAGE/$ZUUL_MOUDULE
-#    - mkdir -p $PACKAGE/$ZUUL_MOUDULE/$TARGET
-#    - echo "复制 Dockefile、各模块jar包。。。。"
-#    - cp $ADMIN_MOUDULE/$TARGET/$ADMIN_JAR $PACKAGE/$ADMIN_MOUDULE/$TARGET
-#    - cp $ADMIN_MOUDULE/Dockerfile $PACKAGE/$ADMIN_MOUDULE/
-#    - cp $CONFIG_MOUDULE/$TARGET/$CONFIG_JAR $PACKAGE/$CONFIG_MOUDULE/$TARGET
-#    - cp $CONFIG_MOUDULE/Dockerfile $PACKAGE/$CONFIG_MOUDULE/
-#    - cp $RIBBON_MOUDULE/$TARGET/$RIBBON_JAR $PACKAGE/$RIBBON_MOUDULE/$TARGET
-#    - cp $RIBBON_MOUDULE/Dockerfile $PACKAGE/$RIBBON_MOUDULE/
-#    - cp $FEIGN_MOUDULE/$TARGET/$FEIGN_JAR $PACKAGE/$FEIGN_MOUDULE/$TARGET
-#    - cp $FEIGN_MOUDULE/Dockerfile $PACKAGE/$FEIGN_MOUDULE/
-#    - cp $PROVIDER_MOUDULE/$TARGET/$PROVIDER_JAR $PACKAGE/$PROVIDER_MOUDULE/$TARGET
-#    - cp $PROVIDER_MOUDULE/Dockerfile $PACKAGE/$PROVIDER_MOUDULE/
-#    - cp $ZIPKIN_MOUDULE/$TARGET/$ZIPKIN_JAR $PACKAGE/$ZIPKIN_MOUDULE/$TARGET
-#    - cp $ZIPKIN_MOUDULE/Dockerfile $PACKAGE/$ZIPKIN_MOUDULE/
-#    - cp $ZUUL_MOUDULE/$TARGET/$ZUUL_JAR $PACKAGE/$ZUUL_MOUDULE/$TARGET
-#    - cp $ZUUL_MOUDULE/Dockerfile $PACKAGE/$ZUUL_MOUDULE/
-#  artifacts:
-#    paths:
-#      - $PACKAGE
+#  eureka-2:
+#    restart : always
+#    container_name: mscloud-eureka-2
+#    image: xiliangma/mscloud-eureka:latest
+#    ports:
+#      - "7001:7000"
+#    volumes:
+#      - /tmp/mscloud/eureka-2/:/maslcoud/eureka-2
+#      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+#      - ./eureka/entrypoint.sh:/mscloud/eureka/entrypoint.sh
+#    depends_on:
+#      - config
+#    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "config:8888", "--strict", "--", "/mscloud/eureka/entrypoint.sh"]
 #
 #
-#buid:
-#  stage: build
-#  image: docker:latest
-#  services:
-#    - docker:dind
-#  only:
-#    - master
-#  dependencies:
-#    - package
-#  before_script:
-#    - echo $USER $PASSWORD
-#    - docker login -u $USER -p $PASSWORD
-#  script:
-#    - echo "build ----------- 1. $ADMIN_MOUDULE -----------"
-#    - cd $PACKAGE/$ADMIN_MOUDULE
-#    - docker build -t $IMAGE/$ADMIN_VERSION:$TAG .
-#    - docker push $IMAGE/$ADMIN_VERSION:$TAG
-#    - cd -
-#    - echo "build success $IMAGE/$ADMIN_VERSION:$TAG"
-#
-#    - echo "build ----------- 2. $CONFIG_MOUDULE -----------"
-#    - cd $PACKAGE/$CONFIG_MOUDULE
-#    - docker build -t $IMAGE/$CONFIG_VERSION:$TAG .
-#    - docker push $IMAGE/$CONFIG_VERSION:$TAG
-#    - cd -
-#    - echo "build success $IMAGE/$CONFIG_VERSION:$TAG"
-#
-#    - echo "build ----------- 3. $RIBBON_MOUDULE -----------"
-#    - cd $PACKAGE/$RIBBON_MOUDULE
-#    - docker build -t $IMAGE/$RIBBON_VERSION:$TAG .
-#    - docker push $IMAGE/$RIBBON_VERSION:$TAG
-#    - cd -
-#    - echo "build success $IMAGE/$RIBBON_VERSION:$TAG"
-#
-#    - echo "build ----------- 4. $FEIGN_MOUDULE -----------"
-#    - cd $PACKAGE/$FEIGN_MOUDULE
-#    - docker build -t $IMAGE/$FEIGN_VERSION:$TAG .
-#    - docker push $IMAGE/$FEIGN_VERSION:$TAG
-#    - cd -
-#    - echo "build success $IMAGE/$FEIGN_VERSION:$TAG"
-#
-#    - echo "build ----------- 5. $PROVIDER_MOUDULE -----------"
-#    - cd $PACKAGE/$PROVIDER_MOUDULE
-#    - docker build -t $IMAGE/$PROVIDER_VERSION:$TAG .
-#    - docker push $IMAGE/$PROVIDER_VERSION:$TAG
-#    - cd -
-#    - echo "build success $IMAGE/$PROVIDER_VERSION:$TAG"
-#
-#    - echo "build ----------- 6. $ZIPKIN_MOUDULE -----------"
-#    - cd $PACKAGE/$ZIPKIN_MOUDULE
-#    - docker build -t $IMAGE/$ZIPKIN_VERSION:$TAG .
-#    - docker push $IMAGE/$ZIPKIN_VERSION:$TAG
-#    - cd -
-#    - echo "build success $IMAGE/$ZIPKIN_VERSION:$TAG"
-#
-#    - echo "build ----------- 7. $ZUUL_MOUDULE -----------"
-#    - cd $PACKAGE/$ZUUL_MOUDULE
-#    - docker build -t $IMAGE/$ZUUL_VERSION:$TAG .
-#    - docker push $IMAGE/$ZUUL_VERSION:$TAG
-#    - cd -
-#    - echo "build success $IMAGE/$ZUUL_VERSION:$TAG"
-#    - docker images
+#  eureka-3:
+#    restart : always
+#    container_name: mscloud-eureka-3
+#    image: xiliangma/mscloud-eureka:latest
+#    ports:
+#      - "7002:7000"
+#    volumes:
+#      - /tmp/mscloud/eureka-3/:/maslcoud/eureka-3
+#      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+#      - ./eureka/entrypoint.sh:/mscloud/eureka/entrypoint.sh
+#    depends_on:
+#      - config
+#    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "config:8888", "--strict", "--", "/mscloud/eureka/entrypoint.sh"]
 
-deploy:
-  stage: deploy
-  image: docker:latest
-  services:
-    - docker:dind
-  before_script:
-#    - apk update
-#    - apk upgrade
-#    - apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make sudo
-#    - pip install docker-compose
-    - apk add docker
-    - echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-    - apk update
-    - rc-update add docker boot
-    - service docker restart
-#    - docker-compose version
-  script:
-    - ls
-    - docker-compose up -d
-    - docker-compose ps
+
+  # -------- provider --------
+  provider:
+    restart : always
+    container_name: mscloud_provider_service
+    image: xiliangma/mscloud-provider:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - /tmp/mscloud/provider/:/maslcoud/provider
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./provider-service/entrypoint.sh:/mscloud/provider-service/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/provider-service/entrypoint.sh"]
+
+
+  # -------- consumer ribbon --------
+  consumer-ribbon:
+    restart : always
+    container_name: mscloud-consumer-ribbon
+    image: xiliangma/mscloud-consumer-ribbon:latest
+    ports:
+      - "9000:9000"
+    volumes:
+      - /tmp/mscloud/consumer-ribbon/:/maslcoud/consumer-ribbon
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./consumer-ribbon/entrypoint.sh:/mscloud/consumer-ribbon/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+      - provider
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/consumer-ribbon/entrypoint.sh"]
+
+
+  # -------- consumer feign --------
+  consumer-feign:
+    restart : always
+    container_name: mscloud-consumer-feign
+    image: xiliangma/mscloud-consumer-feign:latest
+    ports:
+      - "9001:9001"
+    volumes:
+      - /tmp/mscloud/consumer-feign/:/maslcoud/consumer-feign
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./consumer-feign/entrypoint.sh:/mscloud/consumer-feign/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/consumer-feign/entrypoint.sh"]
+
+
+  # -------- zuul --------
+  zuul:
+    container_name: mscloud-zuul
+    image: xiliangma/mscloud-zuul:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - /tmp/mscloud/zuul/:/maslcoud/zuul
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./zuul/entrypoint.sh:/mscloud/zuul/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/zuul/entrypoint.sh"]
+
+
+  # -------- admin --------
+  admin:
+    container_name: mscloud-admin
+    image: xiliangma/mscloud-admin:latest
+    ports:
+      - "2000:2000"
+    volumes:
+      - /tmp/mscloud/admin/:/maslcoud/admin
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./admin/entrypoint.sh:/mscloud/admin/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/admin/entrypoint.sh"]
+
+
+
+  # -------- zipkin --------
+  zipkin:
+    container_name: mscloud-zipkin
+    image: xiliangma/mscloud-zipkin:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - /tmp/mscloud/zipkin/:/maslcoud/zipkin
+      - ./wait-for-it.sh:/mscloud/wait-for-it.sh
+      - ./zipkin/entrypoint.sh:/mscloud/zipkin/entrypoint.sh
+    depends_on:
+      - config
+      - eureka-1
+#      - eureka-2
+#      - eureka-3
+      - consumer-feign
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/zipkin/entrypoint.sh"]
+
