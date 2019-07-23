@@ -1,5 +1,6 @@
 variables:
   # ----------- docker -----------
+  DOCKER_HOST: tcp://127.0.0.1:2375/
   REGISTRY: cloud.docker.com
   USER: xiliangma
   PASSWORD: maxiliang4115
