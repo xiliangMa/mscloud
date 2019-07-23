@@ -184,7 +184,7 @@ deploy:
 #    - apk update
 #    - rc-update add docker boot
 #    - service docker restart
-    - sudo docker-compose version
+    - docker-compose version
   script:
-    - sudo docker-compose up -d
-    - sudo docker-compose ps
+    - docker-compose up -d
+    - docker-compose ps
