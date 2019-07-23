@@ -183,5 +183,6 @@ deploy:
 #    - service docker restart
     - docker-compose version
   script:
+    - ls
     - docker-compose up -d
     - docker-compose ps
