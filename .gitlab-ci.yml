@@ -193,7 +193,7 @@ deploy:
 #    - rc-update add docker boot
 #    - service docker restart
     - docker-compose version
-    - ls -l mscloud/
+    - ls -l admin/target
   script:
     - docker-compose up -d
     - docker-compose ps
