@@ -174,7 +174,7 @@ deploy:
   before_script:
 #    - apk update
 #    - apk upgrade
-    - apk add python-dev libffi-dev openssl-dev gcc libc-dev make
+    - apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
     - docker-compose version
   script:
