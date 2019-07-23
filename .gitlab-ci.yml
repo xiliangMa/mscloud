@@ -179,12 +179,14 @@ deploy:
 #    - apk upgrade
 #    - apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make sudo
 #    - pip install docker-compose
-    - apk add docker
-    - echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-    - apk update
-    - rc-update add docker boot
-    - service docker restart
+#    - apk add docker
+#    - echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+#    - apk update
+#    - rc-update add docker boot
+#    - service docker restart
 #    - docker-compose version
+    - docker info
+    - docker-compose version
   script:
     - ls
     - docker-compose up -d
