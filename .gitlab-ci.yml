@@ -1,6 +1,6 @@
 variables:
   # ----------- docker -----------
-  DOCKER_HOST: tcp://docker:2375/
+#  DOCKER_HOST: tcp://docker:2375/
   DOCKER_DRIVER: overlay2
   REGISTRY: cloud.docker.com
   USER: xiliangma
@@ -179,5 +179,6 @@ deploy:
     - apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make sudo
     - pip install docker-compose
   script:
+    - ls
     - sudo docker-compose up -d
     - sudo docker-compose ps
