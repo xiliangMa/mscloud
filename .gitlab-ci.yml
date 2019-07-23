@@ -1,7 +1,7 @@
 variables:
   # ----------- docker -----------
 #  DOCKER_HOST: tcp://docker:2375/
-#  DOCKER_DRIVER: overlay2
+  DOCKER_DRIVER: overlay2
 #  DOCKER_TLS_CERTDIR: ""
   REGISTRY: cloud.docker.com
   USER: xiliangma
@@ -171,21 +171,21 @@ stages:
 
 deploy:
   stage: deploy
-#  image: docker:latest
-#  services:
-#    - docker:dind
+  image: docker:latest
+  services:
+    - docker:dind
   before_script:
 #    - apk update
 #    - apk upgrade
 #    - apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make sudo
 #    - pip install docker-compose
-#    - apk add docker
-#    - echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-#    - apk update
-#    - rc-update add docker boot
-#    - service docker restart
-#    - docker ps
+    - apk add docker
+    - echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+    - apk update
+    - rc-update add docker boot
+    - service docker restart
+#    - docker-compose version
   script:
     - ls
-    - docker-compose version
-#    - sudo docker-compose ps
+    - docker-compose up -d
+    - docker-compose ps
