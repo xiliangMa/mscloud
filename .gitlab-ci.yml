@@ -1,6 +1,6 @@
 variables:
   # ----------- docker -----------
-  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_HOST: tcp://127.0.0.1:2375/
   DOCKER_DRIVER: overlay2
   REGISTRY: cloud.docker.com
   USER: xiliangma
