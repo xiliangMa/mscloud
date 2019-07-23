@@ -174,10 +174,7 @@ deploy:
   before_script:
 #    - apk update
 #    - apk upgrade
-    - apk add python python-dev python-pip build-base curl
-#    - curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-Linux-x86_64 -o /usr/local/bin/docker-compose
-#    - chmod +x /usr/local/bin/docker-compose
-#    - ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+    - apk add python-dev libffi-dev openssl-dev gcc libc-dev make
     - pip install docker-compose
     - docker-compose version
   script:
