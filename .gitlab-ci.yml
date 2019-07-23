@@ -185,9 +185,6 @@ deploy:
 #    - rc-update add docker boot
 #    - service docker restart
     - docker-compose version
-    - docker ps
-#    - docker info
   script:
-    - ls
     - docker-compose up -d
     - docker-compose ps
