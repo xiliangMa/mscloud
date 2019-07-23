@@ -175,7 +175,7 @@ deploy:
   services:
     - docker:dind
   before_script:
-#    - apk update
+    - apk update
 #    - apk upgrade
 #    - apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make sudo
 #    - pip install docker-compose
