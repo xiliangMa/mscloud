@@ -184,5 +184,5 @@ deploy:
     - docker-compose version
   script:
     - ls -l
-    - docker-compose up -d
+    - sudo docker-compose up -d
     - docker-compose ps
