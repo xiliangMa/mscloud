@@ -24,7 +24,7 @@ services:
       - ./eureka/entrypoint.sh:/mscloud/eureka/entrypoint.sh
     depends_on:
       - config
-    entrypoint: ["./wait-for-it.sh", "-t", "0", "config:8888", "--strict", "--", "./eureka/entrypoint.sh", "-m", "cicd"]
+    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "config:8888", "--strict", "--", "/mscloud/eureka/entrypoint.sh", "-m", "cicd"]
 
 #  eureka-2:
 #    restart : always
