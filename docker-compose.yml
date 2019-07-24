@@ -72,8 +72,7 @@ services:
       - eureka-1
 #      - eureka-2
 #      - eureka-3
-    entrypoint: ["ls", "-l", "/mscloud"]
-    # entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/provider-service/entrypoint.sh"]
+    entrypoint: ["/bin/sh","/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/provider-service/entrypoint.sh"]
 
 
   # -------- consumer ribbon --------
@@ -93,7 +92,7 @@ services:
 #      - eureka-2
 #      - eureka-3
       - provider
-    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/consumer-ribbon/entrypoint.sh"]
+    entrypoint: ["/bin/sh", "/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/consumer-ribbon/entrypoint.sh"]
 
 
   # -------- consumer feign --------
@@ -112,7 +111,7 @@ services:
       - eureka-1
 #      - eureka-2
 #      - eureka-3
-    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/consumer-feign/entrypoint.sh"]
+    entrypoint: ["/bin/sh", "/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/consumer-feign/entrypoint.sh"]
 
 
   # -------- zuul --------
@@ -130,7 +129,7 @@ services:
       - eureka-1
 #      - eureka-2
 #      - eureka-3
-    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/zuul/entrypoint.sh"]
+    entrypoint: ["/bin/sh", "/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/zuul/entrypoint.sh"]
 
 
   # -------- admin --------
@@ -148,7 +147,7 @@ services:
       - eureka-1
 #      - eureka-2
 #      - eureka-3
-    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/admin/entrypoint.sh"]
+    entrypoint: ["/bin/sh", "/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/admin/entrypoint.sh"]
 
 
 
@@ -168,5 +167,5 @@ services:
 #      - eureka-2
 #      - eureka-3
       - consumer-feign
-    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/zipkin/entrypoint.sh"]
+    entrypoint: ["/bin/sh", "/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/zipkin/entrypoint.sh"]
 
