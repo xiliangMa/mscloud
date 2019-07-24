@@ -72,7 +72,8 @@ services:
       - eureka-1
 #      - eureka-2
 #      - eureka-3
-    entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/provider-service/entrypoint.sh"]
+    entrypoint:["ls", "-l", "/mscloud"]
+    # entrypoint: ["/mscloud/wait-for-it.sh", "-t", "0", "eureka-1:7000", "--strict", "--", "/mscloud/provider-service/entrypoint.sh"]
 
 
   # -------- consumer ribbon --------
