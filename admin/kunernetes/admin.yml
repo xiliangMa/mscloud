@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud
+    spec:
+      containers:
+      - name: amdin
+        image: xiliangma/mscloud-admin:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: dev
+          containerPort: 3000
+        - name: web
+          containerPort: 8080
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /mscloud/admin
+          name: admin-data
+      volumes:
+      - name: admin-data
+        hostPath:
+          path: /tmp/mscloud/admin
