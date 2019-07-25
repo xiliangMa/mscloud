@@ -157,6 +157,7 @@ services:
     image: xiliangma/mscloud-zipkin:latest
     ports:
       - "3000:3000"
+      - "8080:8080"
     volumes:
       - /tmp/mscloud/zipkin/:/maslcoud/zipkin
       - ./wait-for-it.sh:/mscloud/wait-for-it.sh
