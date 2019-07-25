@@ -1,7 +1,11 @@
 127.0.0.1 eureka-server-7000
+127.0.0.1 eureka-server-7001
+127.0.0.1 eureka-server-7002
 127.0.0.1 provider-service-8001
 127.0.0.1 provider-service-8000
 127.0.0.1 consumer-service-feign-9001
 127.0.0.1 consumer-service-ribbon-9000
 127.0.0.1 zipkin-service-3000
 127.0.0.1 admin-service-2000
+127.0.0.1 config-service-8888
+127.0.0.1 api-gateway-5000
