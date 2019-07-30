@@ -21,7 +21,6 @@ spec:
         ports:
         - name: dev
           containerPort: 9001
-          hostPort: 30003
         resources:
           limits:
             cpu: 1000m

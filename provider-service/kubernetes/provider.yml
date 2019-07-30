@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: provider
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: mscloud-provider
@@ -21,7 +21,6 @@ spec:
         ports:
         - name: dev
           containerPort: 8000
-          hostPort: 30002
         resources:
           limits:
             cpu: 1000m
