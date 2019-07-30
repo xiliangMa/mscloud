@@ -3,7 +3,7 @@ spring:
     name: provider-service
   cloud:
     config:
-      uri: http://config-service-8888:8888
+      uri: http://mscloud-config-service:8888
       name: provider-service
       label: master
       profile: dev

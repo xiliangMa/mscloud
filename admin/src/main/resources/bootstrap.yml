@@ -3,7 +3,7 @@ spring:
     name: admin-service
   cloud:
     config:
-      uri: http://config-service-8888:8888
+      uri: http://mscloud-config-service:8888
       name: admin-service
       label: master
       profile: dev

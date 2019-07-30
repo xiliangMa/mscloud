@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: admin
+  name: provider
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mscloud-admin
+      app: mscloud-provider
       project: mscloud
   template:
     metadata:
       labels:
-        app: mscloud-admin
+        app: mscloud-provider
         project: mscloud
     spec:
       containers:
-      - name: amdin
-        image: xiliangma/mscloud-admin:latest
+      - name: provider
+        image: xiliangma/mscloud-provider:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: dev
-          containerPort: 2000
-          hostPort: 30006
+          containerPort: 8000
+          hostPort: 30002
         resources:
           limits:
             cpu: 1000m
@@ -30,25 +30,24 @@ spec:
             cpu: 300m
             memory: 256Mi
         volumeMounts:
-        - mountPath: /mscloud/admin
-          name: admin-data
+        - mountPath: /mscloud/provider
+          name: provider-data
       volumes:
-      - name: admin-data
+      - name: provider-data
         hostPath:
-          path: /tmp/mscloud/admin
-
+          path: /tmp/mscloud/provider
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mscloud-admin-service
+  name: mscloud-provider-service
   labels:
-    app: mscloud-admin
+    app: mscloud-provider
     project: mscloud
 spec:
   selector:
-    app: mscloud-admin
+    app: mscloud-provider
     project: mscloud
   ports:
   - name: dev
-    port: 2000
+    port: 8000

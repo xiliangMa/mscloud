@@ -4,7 +4,10 @@ spring:
     name: eureka-server
   cloud:
     config:
-      uri: http://config-service-8888:8888
+      # deploy in k8s cluster
+      uri: http://mscloud-config-service:8888
+      # no deploy in k8s cluster
+#      uri: http://config-service-8888:8888
       name: eureka-service #配置中心文件名称
       label: master
       profile: dev

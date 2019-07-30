@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-ribbon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud
+    spec:
+      containers:
+      - name: consumer-ribbon
+        image: xiliangma/mscloud-consumer-ribbon:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: dev
+          containerPort: 3000
+        - name: web
+          containerPort: 8080
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /mscloud/consumer-ribbon
+          name: admin-data
+      volumes:
+      - name: consumer-ribbon-data
+        hostPath:
+          path: /tmp/mscloud/consumer-ribbon

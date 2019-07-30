@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: config-service
+  zipkin:
+    base-url: http://mscloud-zipkin-service:8080
+  boot:
+    admin:
+      client:
+        url: http://mscloud-admin-service:2000
+        instance:
+          management-url: http://mscloud-config-service:8888/actuator
+          health-url: http://mscloud-config-service:8888/actuator/health
+          service-url: http://mscloud-config-service:8888
+  cloud:
+    config:
+      label: master
+      server:
+        git:
+          uri: https://github.com/xiliangMa/mscloud-config.git
+          search-paths: mscloud
+          username:
+          password:
+
+server:
+  port: 8888
+
+eureka:
+  instance:
+    hostname: mscloud-config-service
+  client:
+    service-url:
+      # k8s
+      defaultZone: http://mscloud-eureka-service:7000/eureka/
+      #defaultZone: http://eureka-server-7000:7000/eureka/, http://eureka-server-7001:7001/eureka/, http://eureka-server-7002:7002/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+

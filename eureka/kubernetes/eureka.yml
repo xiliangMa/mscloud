@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: admin
+  name: eureka
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mscloud-admin
+      app: mscloud-eureka
       project: mscloud
   template:
     metadata:
       labels:
-        app: mscloud-admin
+        app: mscloud-eureka
         project: mscloud
     spec:
       containers:
-      - name: amdin
-        image: xiliangma/mscloud-admin:latest
+      - name: eureka
+        image: xiliangma/mscloud-eureka:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: dev
-          containerPort: 2000
-          hostPort: 30006
+          containerPort: 7000
+          hostPort: 30001
         resources:
           limits:
             cpu: 1000m
@@ -30,25 +30,25 @@ spec:
             cpu: 300m
             memory: 256Mi
         volumeMounts:
-        - mountPath: /mscloud/admin
-          name: admin-data
+        - mountPath: /mscloud/eureka
+          name: eureka-data
       volumes:
-      - name: admin-data
+      - name: eureka-data
         hostPath:
-          path: /tmp/mscloud/admin
+          path: /tmp/mscloud/eureka
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mscloud-admin-service
+  name: mscloud-eureka-service
   labels:
-    app: mscloud-admin
+    app: mscloud-eureka
     project: mscloud
 spec:
   selector:
-    app: mscloud-admin
+    app: mscloud-eureka
     project: mscloud
   ports:
   - name: dev
-    port: 2000
+    port: 7000

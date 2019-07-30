@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: admin
+  name: consumer-feign
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mscloud-admin
+      app: mscloud-consumer-feign
       project: mscloud
   template:
     metadata:
       labels:
-        app: mscloud-admin
+        app: mscloud-consumer-feign
         project: mscloud
     spec:
       containers:
-      - name: amdin
-        image: xiliangma/mscloud-admin:latest
+      - name: consumer-feign
+        image: xiliangma/mscloud-consumer-feign:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: dev
-          containerPort: 2000
-          hostPort: 30006
+          containerPort: 9001
+          hostPort: 30003
         resources:
           limits:
             cpu: 1000m
@@ -30,25 +30,24 @@ spec:
             cpu: 300m
             memory: 256Mi
         volumeMounts:
-        - mountPath: /mscloud/admin
-          name: admin-data
+        - mountPath: /mscloud/consumer-feign
+          name: consumer-feign-data
       volumes:
-      - name: admin-data
+      - name: consumer-feign-data
         hostPath:
-          path: /tmp/mscloud/admin
-
+          path: /tmp/mscloud/consumer-feign
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mscloud-admin-service
+  name: mscloud-consumer-feign-service
   labels:
-    app: mscloud-admin
+    app: mscloud-consumer-feign
     project: mscloud
 spec:
   selector:
-    app: mscloud-admin
+    app: mscloud-consumer-feign
     project: mscloud
   ports:
   - name: dev
-    port: 2000
+    port: 9001
