@@ -92,7 +92,3 @@
  1. gitlab cicd 问题处理
  2. 实现 spring cloud 微服务 + istio的结合
  
- 
-
-
-[]: https://github.com/xiliangMa/mscloud/blob/master/images/docker-compose-ps.png
