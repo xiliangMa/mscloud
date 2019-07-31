@@ -39,7 +39,9 @@
     
 # Deploy by docker-compose 
     docker-compose up -d
-    
+
+![image](https://github.com/xiliangMa/mscloud/blob/master/images/docker-compose-ps.png)
+   
    注意：如果部署在公有云服务器，需要将配置中心的各个服务域名配置成ip，或者购买云服务的自定义域名解析，否则服务注册发现失败。
  
 
@@ -69,16 +71,21 @@
  
 # 删除mscloud 所有容器
  1. by docker 
-    > docker rm -f $(docker ps  -a --format "table {{.Names}}" | grep mscloud)
+  
+        docker rm -f $(docker ps  -a --format "table {{.Names}}" | grep mscloud)
     
  2. by docker-compose
-    > docker-compose down
+    
+        docker-compose down
 
 # Deploy in kubernetes cluster 
-  1. 集群搭建
-     > kubeadm 搭建k8s集群： https://blog.csdn.net/weixin_41806245/article/details/89381752
-  2. 部署 mscloud
-     > kubectl apply -f kubernetes/*.yml
+ 1. 集群搭建
+        
+        kubeadm 搭建k8s集群： https://blog.csdn.net/weixin_41806245/article/details/89381752
+        
+ 2. 部署 mscloud
+
+        kubectl apply -f kubernetes/*.yml
  
 
  # TODO
@@ -86,3 +93,6 @@
  2. 实现 spring cloud 微服务 + istio的结合
  
  
+
+
+[]: https://github.com/xiliangMa/mscloud/blob/master/images/docker-compose-ps.png
