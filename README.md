@@ -23,6 +23,7 @@
  7. 服务监控 admin
  8. 服务链路监控 zipkin
 
+ Spring-Cloud 实战系列文章：https://blog.csdn.net/weixin_41806245/article/details/97923108
 
 # Build 镜像
     以config 服务为例
