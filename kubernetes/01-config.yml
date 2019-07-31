@@ -1,29 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: zipkin
+  name: mscloud-config
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mscloud-zipkin
+      app: mscloud-config
       project: mscloud
   template:
     metadata:
       labels:
-        app: mscloud-zipkin
+        app: mscloud-config
         project: mscloud
     spec:
       containers:
-      - name: zipkin
-        image: xiliangma/mscloud-zipkin:latest
+      - name: config
+        image: xiliangma/mscloud-config:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: dev
-          containerPort: 3000
-        - name: web
-          containerPort: 8080
-          hostPort: 30005
+          containerPort: 8888
+          hostPort: 30001
         resources:
           limits:
             cpu: 1000m
@@ -32,26 +30,25 @@ spec:
             cpu: 300m
             memory: 256Mi
         volumeMounts:
-        - mountPath: /mscloud/zipkin
-          name: zipkin-data
+        - mountPath: /mscloud/config
+          name: config-data
       volumes:
-      - name: zipkin-data
+      - name: config-data
         hostPath:
-          path: /tmp/mscloud/zipkin
+          path: /tmp/mscloud/config
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mscloud-zipkin-service
+  name: mscloud-config-service
   labels:
-    app: mscloud-zipkin
+    app: mscloud-config
     project: mscloud
 spec:
   selector:
-    app: mscloud-zipkin
+    app: mscloud-config
     project: mscloud
   ports:
   - name: dev
-    port: 3000
-  - name: web
-    port: 8080
+    port: 8888

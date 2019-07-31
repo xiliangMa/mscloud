@@ -1,26 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: config
+  name: mscloud-eureka
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mscloud-config
+      app: mscloud-eureka
       project: mscloud
   template:
     metadata:
       labels:
-        app: mscloud-config
+        app: mscloud-eureka
         project: mscloud
     spec:
       containers:
-      - name: config
-        image: xiliangma/mscloud-config:latest
+      - name: eureka
+        image: xiliangma/mscloud-eureka:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: dev
-          containerPort: 8888
+          containerPort: 7000
+          hostPort: 30002
         resources:
           limits:
             cpu: 1000m
@@ -29,25 +30,25 @@ spec:
             cpu: 300m
             memory: 256Mi
         volumeMounts:
-        - mountPath: /mscloud/config
-          name: config-data
+        - mountPath: /mscloud/eureka
+          name: eureka-data
       volumes:
-      - name: config-data
+      - name: eureka-data
         hostPath:
-          path: /tmp/mscloud/config
+          path: /tmp/mscloud/eureka
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mscloud-config-service
+  name: mscloud-eureka-service
   labels:
-    app: mscloud-config
+    app: mscloud-eureka
     project: mscloud
 spec:
   selector:
-    app: mscloud-config
+    app: mscloud-eureka
     project: mscloud
   ports:
   - name: dev
-    port: 8888
+    port: 7000

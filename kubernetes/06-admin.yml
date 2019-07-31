@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: zuul
+  name: mscloud-admin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mscloud-zuul
+      app: mscloud-admin
       project: mscloud
   template:
     metadata:
       labels:
-        app: mscloud-zuul
+        app: mscloud-admin
         project: mscloud
     spec:
       containers:
-      - name: zuul
-        image: xiliangma/mscloud-zuul:latest
+      - name: amdin
+        image: xiliangma/mscloud-admin:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: dev
-          containerPort: 5000
-          hostPort: 30004
+          containerPort: 2000
+          hostPort: 30006
         resources:
           limits:
             cpu: 1000m
@@ -30,24 +30,25 @@ spec:
             cpu: 300m
             memory: 256Mi
         volumeMounts:
-        - mountPath: /mscloud/zuul
-          name: zuul-data
+        - mountPath: /mscloud/admin
+          name: admin-data
       volumes:
-      - name: zuul-data
+      - name: admin-data
         hostPath:
-          path: /tmp/mscloud/zuul
+          path: /tmp/mscloud/admin
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mscloud-zuul-service
+  name: mscloud-admin-service
   labels:
-    app: mscloud-zuul
+    app: mscloud-admin
     project: mscloud
 spec:
   selector:
-    app: mscloud-zuul
+    app: mscloud-admin
     project: mscloud
   ports:
   - name: dev
-    port: 5000
+    port: 2000

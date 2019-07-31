@@ -1,27 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: admin
+  name: mscloud-zipkin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mscloud-admin
+      app: mscloud-zipkin
       project: mscloud
   template:
     metadata:
       labels:
-        app: mscloud-admin
+        app: mscloud-zipkin
         project: mscloud
     spec:
       containers:
-      - name: amdin
-        image: xiliangma/mscloud-admin:latest
+      - name: zipkin
+        image: xiliangma/mscloud-zipkin:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: dev
-          containerPort: 2000
-          hostPort: 30006
+          containerPort: 3000
+        - name: web
+          containerPort: 8080
+          hostPort: 30007
         resources:
           limits:
             cpu: 1000m
@@ -30,25 +32,26 @@ spec:
             cpu: 300m
             memory: 256Mi
         volumeMounts:
-        - mountPath: /mscloud/admin
-          name: admin-data
+        - mountPath: /mscloud/zipkin
+          name: zipkin-data
       volumes:
-      - name: admin-data
+      - name: zipkin-data
         hostPath:
-          path: /tmp/mscloud/admin
-
+          path: /tmp/mscloud/zipkin
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mscloud-admin-service
+  name: mscloud-zipkin-service
   labels:
-    app: mscloud-admin
+    app: mscloud-zipkin
     project: mscloud
 spec:
   selector:
-    app: mscloud-admin
+    app: mscloud-zipkin
     project: mscloud
   ports:
   - name: dev
-    port: 2000
+    port: 3000
+  - name: web
+    port: 8080

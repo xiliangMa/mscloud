@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: consumer-feign
+  name: mscloud-provider
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: mscloud-consumer-feign
+      app: mscloud-provider
       project: mscloud
   template:
     metadata:
       labels:
-        app: mscloud-consumer-feign
+        app: mscloud-provider
         project: mscloud
     spec:
       containers:
-      - name: consumer-feign
-        image: xiliangma/mscloud-consumer-feign:latest
+      - name: provider
+        image: xiliangma/mscloud-provider:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: dev
-          containerPort: 9001
+          containerPort: 8000
         resources:
           limits:
             cpu: 1000m
@@ -29,24 +29,24 @@ spec:
             cpu: 300m
             memory: 256Mi
         volumeMounts:
-        - mountPath: /mscloud/consumer-feign
-          name: consumer-feign-data
+        - mountPath: /mscloud/provider
+          name: provider-data
       volumes:
-      - name: consumer-feign-data
+      - name: provider-data
         hostPath:
-          path: /tmp/mscloud/consumer-feign
+          path: /tmp/mscloud/provider
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mscloud-consumer-feign-service
+  name: mscloud-provider-service
   labels:
-    app: mscloud-consumer-feign
+    app: mscloud-provider
     project: mscloud
 spec:
   selector:
-    app: mscloud-consumer-feign
+    app: mscloud-provider
     project: mscloud
   ports:
   - name: dev
-    port: 9001
+    port: 8000

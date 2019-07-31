@@ -1,9 +1,9 @@
-127.0.0.1 mscloud-eureka-server
+127.0.0.1 mscloud-config-service
+127.0.0.1 mscloud-eureka-service
 127.0.0.1 mscloud-provider-service
-127.0.0.1 mscloud-provider-service
-127.0.0.1 mscloud-consumer-service-feign
-127.0.0.1 mscloud-consumer-service-ribbon
+127.0.0.1 mscloud-consumer-feign-service
+127.0.0.1 mscloud-consumer-ribbon-service
 127.0.0.1 mscloud-zipkin-service
 127.0.0.1 mscloud-admin-service
 127.0.0.1 mscloud-config-service
-127.0.0.1 mscloud-api-gateway
+127.0.0.1 mscloud-zuul-service

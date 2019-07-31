@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: eureka
+  name: mscloud-zuul
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mscloud-eureka
+      app: mscloud-zuul
       project: mscloud
   template:
     metadata:
       labels:
-        app: mscloud-eureka
+        app: mscloud-zuul
         project: mscloud
     spec:
       containers:
-      - name: eureka
-        image: xiliangma/mscloud-eureka:latest
+      - name: zuul
+        image: xiliangma/mscloud-zuul:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: dev
-          containerPort: 7000
-          hostPort: 30001
+          containerPort: 5000
+          hostPort: 30005
         resources:
           limits:
             cpu: 1000m
@@ -30,25 +30,24 @@ spec:
             cpu: 300m
             memory: 256Mi
         volumeMounts:
-        - mountPath: /mscloud/eureka
-          name: eureka-data
+        - mountPath: /mscloud/zuul
+          name: zuul-data
       volumes:
-      - name: eureka-data
+      - name: zuul-data
         hostPath:
-          path: /tmp/mscloud/eureka
-
+          path: /tmp/mscloud/zuul
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mscloud-eureka-service
+  name: mscloud-zuul-service
   labels:
-    app: mscloud-eureka
+    app: mscloud-zuul
     project: mscloud
 spec:
   selector:
-    app: mscloud-eureka
+    app: mscloud-zuul
     project: mscloud
   ports:
   - name: dev
-    port: 7000
+    port: 5000
