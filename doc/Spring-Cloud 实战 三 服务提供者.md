@@ -25,7 +25,7 @@ eureka:
 
 # 创建Module provider
 
-** 基于mscloud project 创建 module provider**
+**基于mscloud project 创建 module provider**
 
 ------------
 
@@ -114,8 +114,8 @@ public class ProviderServiceController {
 
 
 # 启动测试
-**1. 首先要启动config 配置中心**
-**2. 启动eureka 服务端**
+**1. 首先要启动config 配置中心** \
+**2. 启动eureka 服务端** \
 **3. 启动provider服务**
 
 provider 接口访问：

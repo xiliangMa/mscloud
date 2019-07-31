@@ -5,14 +5,20 @@ Spring Cloud Config分为服务端和客户端两部分。其中服务端称为�
 
 Spring Cloud Config实现的配置中心默认采用Git来存储配置信息，但也提供了对其他存储方式的支持，比如SVN仓库、本地文件系统。在本例中构建了一个基于Git存储的分布式配置中心，并在客户端中演示了如何制定应用所属的配置中心，并能够从配置中心获取配置信息的整个过程。
 
+------------
+
 # 准备config 仓库
 很简单创建一个普通项目，git管理即可；
 项目地址：https://github.com/xiliangMa/mscloud-config
+
+------------
 
 # 创建项目
  1. 基于ide 或者 eclipse 创建project mscloud。 [mscloud github仓库地址](https://github.com/xiliangMa/mscloud "mscloud地址")
  2. 创建Module config。
 
+
+------------
 
 # 配置 mscloud 父类project pom.xml
 **引入依赖：**
@@ -38,6 +44,9 @@ Spring Cloud Config实现的配置中心默认采用Git来存储配置信息，�
             <scope>import</scope>
         </dependency>
 ```
+
+------------
+
 # 配置Module config pom.xml
 **引入config 依赖**
 
@@ -58,6 +67,9 @@ Spring Cloud Config实现的配置中心默认采用Git来存储配置信息，�
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
 ```
+
+------------
+
 # 配置bootstrap.yml
 ```yaml
 spring:
@@ -85,6 +97,9 @@ spring:
           password:
 ```
 
+
+------------
+
 # Config服务端启动入口 ConfigApplication.java
 配置@EnableConfigServer 注解
 
@@ -98,6 +113,8 @@ public class ConfigApplication {
 }
 
 ```
+
+------------
 # 启动测试
 出现下面的结果表示成功
 
