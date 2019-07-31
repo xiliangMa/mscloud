@@ -86,7 +86,7 @@
  2. 部署 mscloud
 
         kubectl apply -f kubernetes/*.yml
- 
+![image](https://github.com/xiliangMa/mscloud/blob/master/images/k8s-mscloud.png) 
 
  # TODO
  1. gitlab cicd 问题处理
