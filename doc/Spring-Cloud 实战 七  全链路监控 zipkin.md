@@ -32,6 +32,41 @@ eureka:
 
 
 ------------
+
+# 修改父类project pom.xml
+**添加 zipkin 依赖**
+
+```xml
+ 			<!-- zipkin -->
+			<dependency>
+			<groupId>io.zipkin.java</groupId>
+			<artifactId>zipkin-server</artifactId>
+			<version>${zipkin.version}</version>
+			</dependency>
+			<dependency>
+			<groupId>io.zipkin.java</groupId>
+			<artifactId>zipkin-autoconfigure-ui</artifactId>
+			<version>${zipkin.version}</version>
+			</dependency>
+```
+
+**标识版本**
+
+```xml
+	<properties>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+        <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
+        <spring-cloud-netflix-hystrix.version>2.0.0.RELEASE</spring-cloud-netflix-hystrix.version>
+		<!-- zipkin 版本 -->
+        <zipkin.version>2.12.8</zipkin.version>
+		<!-- zipkin 版本 -->
+    </properties>
+```
+
+
+------------
+
 # 其他服务 config 配置中心添加添加 zipkin url
 
 **例如 feign**
@@ -156,8 +191,6 @@ public class ZipkinApplication {
 **zipkin 请求链路依赖：**
 
 ![image](https://github.com/xiliangMa/mscloud/blob/master/images/Spring-Cloud/zipkin-request-depen.png)
-
-
 
 
 

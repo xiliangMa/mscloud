@@ -28,6 +28,43 @@ feign:
 
 ------------
 
+# 修改父类project pom.xml
+**添加 hystrix 依赖**
+
+```xml
+ 			 <!-- hystrix dashboard -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-netflix-hystrix-dashboard</artifactId>
+                <version>${spring-cloud-netflix-hystrix.version}</version>
+            </dependency>
+```
+
+**标识版本**
+
+```xml
+	<properties>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+        <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
+		<!-- zipkin -->
+        <spring-cloud-netflix-hystrix.version>2.0.0.RELEASE</spring-cloud-netflix-hystrix.version>
+		<!-- zipkin -->
+    </properties>
+```
+
+------------
+# 其他服务 修改 pom.xml
+
+**添加 zipkin 依赖**
+```xml
+ 		<!-- zipkin -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+```
+------------
 # 修改Module consumer-feign pom.xml
 **添加 hystrix dashboard 依赖**
 
@@ -129,5 +166,6 @@ public interface ConsumerFeignService {
 浏览器打开链接 http://ip:port/consumer/port 多次刷新
 
 ![image](https://github.com/xiliangMa/mscloud/blob/master/images/Spring-Cloud/hystrix-test.png)
+
 
 
