@@ -196,3 +196,8 @@ buid:
 #  script:
 #    - docker-compose up -d
 #    - docker-compose ps
+
+# deploy in k8s cluster
+stage: deploy
+script:
+  ./

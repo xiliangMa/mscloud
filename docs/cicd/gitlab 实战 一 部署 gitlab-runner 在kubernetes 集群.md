@@ -1,4 +1,4 @@
-#前提
+# 前提
 - 已经拥有gitlab服务器
 - 熟悉 kubernetes 的基础操作
 [helm 安装步骤](https://blog.csdn.net/weixin_41806245/article/details/98631199)
