@@ -1,3 +1,6 @@
+[![Build Status](https://api.travis-ci.com/xiliangMa/mscloud.svg?branch=master)](https://travis-ci.org/xiliangMa/mscloud)
+[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/xiliangMa/mscloud/blob/master/LICENSE)
+
 # mscloud
 1. 基于 spring-boot、 spring-cloud 的微服务demo， 带你快速的熟悉spring-cloud 微服务模式。
 2. 通过Docker实现 spring-cloud微服务容器化，实现传统应用到容器化的过度。

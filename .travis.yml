@@ -1,0 +1,54 @@
+language: java
+
+jdk: openjdk8
+
+script:
+  - mvn clean
+  - mvn package
+
+branches:
+  only:
+    - master
+
+after_success:
+  # login
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+  #### build & push images
+
+  # ------------ config ------------
+  - export CONFIG=xiliangma/mscloud-config
+  - docker build -f ./config/Dockerfile -t $CONFIG:latest ./config
+  - docker push $CONFIG:latest
+
+  # ------------ eureka ------------
+  - export EUREKA=xiliangma/mscloud-eureka
+  - docker build -f ./eureka/Dockerfile -t $EUREKA:latest ./eureka
+  - docker push $EUREKA:latest
+
+  # ------------ provider ------------
+  - export PROVIDER=xiliangma/mscloud-provider
+  - docker build -f ./provider/Dockerfile -t $PROVIDER:latest ./provider
+  - docker push $PROVIDER:latest
+
+  # ------------ feign ------------
+  - export FEIGN=xiliangma/mscloud-consumer-feign
+  - docker build -f ./consumer-feign/Dockerfile -t $FEIGN:latest ./consumer-feign
+  - docker push $FEIGN:latest
+
+  # ------------ zuul ------------
+  - export ZUUL=xiliangma/mscloud-zuul
+  - docker build -f ./zuul/Dockerfile -t $ZUUL:latest ./zuul
+  - docker push $ZUUL:latest
+
+
+  # ------------ zipkin ------------
+  - export ZIPKIN=xiliangma/mscloud-zipkin
+  - docker build -f ./zipkin/Dockerfile -t $ZIPKIN:latest ./zipkin
+  - docker push $ZIPKIN:latest
+
+  # ------------ admin ------------
+  - export ADMIN=xiliangma/mscloud-admin
+  - docker build -f ./admin/Dockerfile -t $ADMIN:latest ./admin
+  - docker push $ADMIN:latest
+

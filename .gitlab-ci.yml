@@ -1,7 +1,7 @@
 variables:
   # ----------- docker -----------
   REGISTRY: cloud.docker.com
-  USER: xiliangma
+  USER: $USER
   PASSWORD: maxiliang4115
   IMAGE: xiliangma
   TAG: latest
