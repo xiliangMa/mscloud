@@ -69,6 +69,10 @@
 8. [Spring-Cloud 实战 八 服务监控 spring-boot admin](https://blog.csdn.net/weixin_41806245/article/details/98044072)
 9. [Spring-Cloud 实战 十 spring cloud 微服务迁移到 kubernetes 集群](https://blog.csdn.net/weixin_41806245/article/details/98852981)
   
+# istio 实战文章链接:
+1. [istio 实战 一 Kubernetes 中快速搭建 istio](https://blog.csdn.net/weixin_41806245/article/details/99589663)
+2. [istio 实战 二 bookinfo 部署](https://blog.csdn.net/weixin_41806245/article/details/99589830)
+
 # 容器化
  1. docker
  2. [docker-compose](https://github.com/xiliangMa/mscloud/blob/master/docs/Docker-Compose/Docker-Compose%20实战篇%20二%20Docker%20Compose%20Spring-Cloud%20微服务编排-%20mscloud.md)
