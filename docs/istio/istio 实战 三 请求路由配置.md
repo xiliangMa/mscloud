@@ -1,3 +1,4 @@
+# istio 实战 三 请求路由配置
 # 简介
 上文介绍到 [istio bookinfo](https://blog.csdn.net/weixin_41806245/article/details/99589830)，浏览器访问 product 服务，界面五角星颜色发生变化， 这是通过service 访问 details、reviews 服务以及不同的版实现。
 
@@ -115,6 +116,7 @@ kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
 v1版本的服务不访问星级评分服务，无论您刷新多少次，页面的评论部分都不会显示评级星标。
 此时已经成功的将所有流量路由到版本 reviews:v1。
 
+![](https://github.com/xiliangMa/mscloud/blob/master/images/istio/istio-vsa-v1.png)
 -------
 
 # 任务二 操作步骤
@@ -158,3 +160,5 @@ kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-test-v2.yam
 
 
 您已成功配置 Istio 以根据用户身份路由流量。
+
+![](https://github.com/xiliangMa/mscloud/blob/master/images/istio/istio-vsrt-v2.png)

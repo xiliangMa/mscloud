@@ -123,6 +123,11 @@ bookinfo-gateway   46s
 31380
 ```
 
+- 应用缺省目标规则
+
+```
+kubectl apply -f samples/bookinfo/networking/destination-rule-all-mtls.yaml -n bookinfo
+```
 -------
 
 # 测试
@@ -131,7 +136,7 @@ bookinfo-gateway   46s
 ![](https://github.com/xiliangMa/mscloud/blob/master/images/istio/istio-bookinfo-product.png)
 
 
-刷新浏览器，据五角星的颜色发生变化；好了你已经成功部署istio 的demo；
+刷新浏览器，看到星级评论发生变化，好了你已经成功部署istio 的demo。
 
 
 
