@@ -84,5 +84,6 @@
         <module>config</module>
         <module>zipkin</module>
         <module>admin</module>
+        <module>spring-cloud-kubernetes-discovery</module>
     </modules>
 </project>
