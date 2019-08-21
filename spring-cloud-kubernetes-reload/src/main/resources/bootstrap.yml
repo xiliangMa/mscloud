@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: mscloud-reload-demo
+#  # 请在第二次测试时去掉注释
+#  profiles:
+#    active: dev
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+        period: 5000
+      config:
+        sources:
+        # 指定configmap
+        - name: ${spring.application.name}
+        # 指定 命名空间 默认是default，如果指定其他的空间需要设置 权限
+          namespce: default

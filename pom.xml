@@ -85,5 +85,6 @@
         <module>zipkin</module>
         <module>admin</module>
         <module>spring-cloud-kubernetes-discovery</module>
+        <module>spring-cloud-kubernetes-reload</module>
     </modules>
 </project>
