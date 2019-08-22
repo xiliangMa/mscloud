@@ -1,7 +1,6 @@
 spring:
   application:
     name: mscloud-reload-demo
-#  # 请在第二次测试时去掉注释
 #  profiles:
 #    active: dev
   cloud:

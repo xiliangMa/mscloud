@@ -5,14 +5,14 @@ metadata:
 data:
   bootstrap.yml: |-
     config:
-      message: This is <default> config!
+      message: This is default config!
     ---
     spring:
       profiles: dev
     config:
-      message: This is <dev> config!
+      message: This is dev config!
     ---
     spring:
       profiles: prod
     config:
-        message: This is <prod> config!
+        message: This is prod config!
