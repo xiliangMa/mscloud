@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mscloud-zipkin
+  labels:
+    app: mscloud-zipkin
+    project: mscloud
+    version: v1
 spec:
   replicas: 1
   selector:
@@ -13,6 +17,7 @@ spec:
       labels:
         app: mscloud-zipkin
         project: mscloud
+        version: v1
     spec:
       containers:
       - name: zipkin
@@ -23,7 +28,7 @@ spec:
           containerPort: 3000
         - name: web
           containerPort: 8080
-          hostPort: 30007
+          hostPort: 30013
         resources:
           limits:
             cpu: 1000m

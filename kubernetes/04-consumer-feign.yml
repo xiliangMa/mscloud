@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mscloud-consumer-feign
+  labels:
+    app: mscloud-consumer-feign
+    project: mscloud
+    version: v1
 spec:
   replicas: 1
   selector:
@@ -13,6 +17,7 @@ spec:
       labels:
         app: mscloud-consumer-feign
         project: mscloud
+        version: v1
     spec:
       containers:
       - name: consumer-feign
@@ -21,7 +26,6 @@ spec:
         ports:
         - name: dev
           containerPort: 9001
-          hostPort: 30004
         resources:
           limits:
             cpu: 1000m

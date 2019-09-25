@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mscloud-zuul
+  labels:
+    app: mscloud-zuul
+    project: mscloud
+    version: v1
 spec:
   replicas: 1
   selector:
@@ -13,6 +17,7 @@ spec:
       labels:
         app: mscloud-zuul
         project: mscloud
+        version: v1
     spec:
       containers:
       - name: zuul
@@ -21,7 +26,7 @@ spec:
         ports:
         - name: dev
           containerPort: 5000
-          hostPort: 30005
+          hostPort: 30011
         resources:
           limits:
             cpu: 1000m
