@@ -33,5 +33,4 @@ spec:
         host: mscloud-zuul-service
         port:
           number: 5000
-        subset: v1
 

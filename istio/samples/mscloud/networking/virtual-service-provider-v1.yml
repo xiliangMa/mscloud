@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mscloud
+  namespace: mscloud
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - mscloud-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /api
+    route:
+    - destination:
+        host: mscloud-zuul-service
+        port:
+          number: 5000
+        subset: v1
+  - match:
+    - uri:
+        exact: /provider/port
+    route:
+    - destination:
+        host: mscloud-provider-service
+        subset: v1
