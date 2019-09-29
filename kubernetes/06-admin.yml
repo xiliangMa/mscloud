@@ -2,10 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mscloud-admin
-  labels:
-    app: mscloud-admin
-    project: mscloud
-    version: v1
 spec:
   replicas: 1
   selector:
@@ -17,7 +13,6 @@ spec:
       labels:
         app: mscloud-admin
         project: mscloud
-        version: v1
     spec:
       containers:
       - name: amdin
@@ -26,7 +21,7 @@ spec:
         ports:
         - name: dev
           containerPort: 2000
-          hostPort: 30012
+          hostPort: 30006
         resources:
           limits:
             cpu: 1000m

@@ -2,10 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mscloud-eureka
-  labels:
-    app: mscloud-eureka
-    project: mscloud
-    version: v1
 spec:
   replicas: 1
   selector:
@@ -17,7 +13,6 @@ spec:
       labels:
         app: mscloud-eureka
         project: mscloud
-        version: v1
     spec:
       containers:
       - name: eureka
@@ -26,7 +21,7 @@ spec:
         ports:
         - name: dev
           containerPort: 7000
-          hostPort: 30010
+          hostPort: 30002
         resources:
           limits:
             cpu: 1000m
