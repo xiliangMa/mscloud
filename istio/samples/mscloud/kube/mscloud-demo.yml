@@ -1,0 +1,478 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-config
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-config
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-config
+        project: mscloud
+        version: v1
+    spec:
+      containers:
+        - name: config
+          image: xiliangma/mscloud-config:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: dev
+              containerPort: 8888
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 300m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /mscloud/config
+              name: config-data
+      volumes:
+        - name: config-data
+          hostPath:
+            path: /tmp/mscloud/config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mscloud-config-service
+  labels:
+    app: mscloud-config
+    project: mscloud
+spec:
+  selector:
+    app: mscloud-config
+    project: mscloud
+  ports:
+    - name: dev
+      port: 8888
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-eureka
+  labels:
+    app: mscloud-eureka
+    project: mscloud
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-eureka
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-eureka
+        project: mscloud
+        version: v1
+    spec:
+      containers:
+        - name: eureka
+          image: xiliangma/mscloud-eureka:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: dev
+              containerPort: 7000
+              hostPort: 30010
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 300m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /mscloud/eureka
+              name: eureka-data
+      volumes:
+        - name: eureka-data
+          hostPath:
+            path: /tmp/mscloud/eureka
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mscloud-eureka-service
+  labels:
+    app: mscloud-eureka
+    project: mscloud
+spec:
+  selector:
+    app: mscloud-eureka
+    project: mscloud
+  ports:
+    - name: dev
+      port: 7000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-provider-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-provider
+      project: mscloud
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mscloud-provider
+        project: mscloud
+        version: v1
+    spec:
+      serviceAccountName: mscloud-provider
+      containers:
+        - name: provider
+          image: xiliangma/mscloud-provider:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: dev
+              containerPort: 8000
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 300m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /mscloud/provider
+              name: provider-data
+      volumes:
+        - name: provider-data
+          hostPath:
+            path: /tmp/mscloud/provider
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-provider-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-provider
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-provider
+        project: mscloud
+        version: v2
+    spec:
+      serviceAccountName: mscloud-provider
+      containers:
+        - name: provider
+          image: xiliangma/mscloud-provider:v2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: dev
+              containerPort: 8000
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 300m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /mscloud/provider
+              name: provider-data
+      volumes:
+        - name: provider-data
+          hostPath:
+            path: /tmp/mscloud/provider
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-provider-v3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-provider
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-provider
+        project: mscloud
+        version: v3
+    spec:
+      serviceAccountName: mscloud-provider
+      containers:
+        - name: provider
+          image: xiliangma/mscloud-provider:v3
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: dev
+              containerPort: 8000
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 300m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /mscloud/provider
+              name: provider-data
+      volumes:
+        - name: provider-data
+          hostPath:
+            path: /tmp/mscloud/provider
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mscloud-provider-service
+  labels:
+    app: mscloud-provider
+    project: mscloud
+spec:
+  selector:
+    app: mscloud-provider
+    project: mscloud
+  ports:
+    - name: dev
+      port: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-consumer-feign
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-consumer-feign
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-consumer-feign
+        project: mscloud
+        version: v1
+    spec:
+      containers:
+        - name: consumer-feign
+          image: xiliangma/mscloud-consumer-feign:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: dev
+              containerPort: 9001
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 300m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /mscloud/consumer-feign
+              name: consumer-feign-data
+      volumes:
+        - name: consumer-feign-data
+          hostPath:
+            path: /tmp/mscloud/consumer-feign
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mscloud-consumer-feign-service
+  labels:
+    app: mscloud-consumer-feign
+    project: mscloud
+spec:
+  selector:
+    app: mscloud-consumer-feign
+    project: mscloud
+  ports:
+    - name: dev
+      port: 9001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-zuul
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-zuul
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-zuul
+        project: mscloud
+        version: v1
+    spec:
+      containers:
+        - name: zuul
+          image: xiliangma/mscloud-zuul:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: dev
+              containerPort: 5000
+              hostPort: 30011
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 300m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /mscloud/zuul
+              name: zuul-data
+      volumes:
+        - name: zuul-data
+          hostPath:
+            path: /tmp/mscloud/zuul
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mscloud-zuul-service
+  labels:
+    app: mscloud-zuul
+    project: mscloud
+spec:
+  selector:
+    app: mscloud-zuul
+    project: mscloud
+  ports:
+    - name: dev
+      port: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-admin
+  labels:
+    app: mscloud-admin
+    project: mscloud
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-admin
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-admin
+        project: mscloud
+        version: v1
+    spec:
+      containers:
+        - name: amdin
+          image: xiliangma/mscloud-admin:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: dev
+              containerPort: 2000
+              hostPort: 30012
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 300m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /mscloud/admin
+              name: admin-data
+      volumes:
+        - name: admin-data
+          hostPath:
+            path: /tmp/mscloud/admin
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mscloud-admin-service
+  labels:
+    app: mscloud-admin
+    project: mscloud
+spec:
+  selector:
+    app: mscloud-admin
+    project: mscloud
+  ports:
+    - name: dev
+      port: 2000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-zipkin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-zipkin
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-zipkin
+        project: mscloud
+        version: v1
+    spec:
+      containers:
+        - name: zipkin
+          image: xiliangma/mscloud-zipkin:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: dev
+              containerPort: 3000
+            - name: web
+              containerPort: 8080
+              hostPort: 30013
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 300m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /mscloud/zipkin
+              name: zipkin-data
+      volumes:
+        - name: zipkin-data
+          hostPath:
+            path: /tmp/mscloud/zipkin
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mscloud-zipkin-service
+  labels:
+    app: mscloud-zipkin
+    project: mscloud
+spec:
+  selector:
+    app: mscloud-zipkin
+    project: mscloud
+  ports:
+    - name: dev
+      port: 3000
+    - name: web
+      port: 8080

@@ -1,0 +1,135 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-provider-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-provider
+      project: mscloud
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mscloud-provider
+        project: mscloud
+        version: v1
+    spec:
+      serviceAccountName: mscloud-provider
+      containers:
+      - name: provider
+        image: xiliangma/mscloud-provider:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: dev
+          containerPort: 8000
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /mscloud/provider
+          name: provider-data
+      volumes:
+      - name: provider-data
+        hostPath:
+          path: /tmp/mscloud/provider
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-provider-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-provider
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-provider
+        project: mscloud
+        version: v2
+    spec:
+      serviceAccountName: mscloud-provider
+      containers:
+      - name: provider
+        image: xiliangma/mscloud-provider:v2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: dev
+          containerPort: 8000
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /mscloud/provider
+          name: provider-data
+      volumes:
+      - name: provider-data
+        hostPath:
+          path: /tmp/mscloud/provider
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-provider-v3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-provider
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-provider
+        project: mscloud
+        version: v3
+    spec:
+      serviceAccountName: mscloud-provider
+      containers:
+      - name: provider
+        image: xiliangma/mscloud-provider:v3
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: dev
+          containerPort: 8000
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /mscloud/provider
+          name: provider-data
+      volumes:
+      - name: provider-data
+        hostPath:
+          path: /tmp/mscloud/provider
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mscloud-provider-service
+  labels:
+    app: mscloud-provider
+    project: mscloud
+spec:
+  selector:
+    app: mscloud-provider
+    project: mscloud
+  ports:
+  - name: dev
+    port: 8000

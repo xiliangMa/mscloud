@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-eureka
+  labels:
+    app: mscloud-eureka
+    project: mscloud
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-eureka
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-eureka
+        project: mscloud
+        version: v1
+    spec:
+      containers:
+      - name: eureka
+        image: xiliangma/mscloud-eureka:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: dev
+          containerPort: 7000
+          hostPort: 30010
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /mscloud/eureka
+          name: eureka-data
+      volumes:
+      - name: eureka-data
+        hostPath:
+          path: /tmp/mscloud/eureka
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mscloud-eureka-service
+  labels:
+    app: mscloud-eureka
+    project: mscloud
+spec:
+  selector:
+    app: mscloud-eureka
+    project: mscloud
+  ports:
+  - name: dev
+    port: 7000

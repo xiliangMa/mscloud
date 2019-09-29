@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mscloud-consumer-feign
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mscloud-consumer-feign
+      project: mscloud
+  template:
+    metadata:
+      labels:
+        app: mscloud-consumer-feign
+        project: mscloud
+        version: v1
+    spec:
+      containers:
+      - name: consumer-feign
+        image: xiliangma/mscloud-consumer-feign:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: dev
+          containerPort: 9001
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /mscloud/consumer-feign
+          name: consumer-feign-data
+      volumes:
+      - name: consumer-feign-data
+        hostPath:
+          path: /tmp/mscloud/consumer-feign
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mscloud-consumer-feign-service
+  labels:
+    app: mscloud-consumer-feign
+    project: mscloud
+spec:
+  selector:
+    app: mscloud-consumer-feign
+    project: mscloud
+  ports:
+  - name: dev
+    port: 9001
