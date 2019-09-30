@@ -30,12 +30,13 @@ curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.2.4 sh -
 # 安装istio
 #### 安装istio crd
 
-`
-➜ for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
-`
+```
+for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
+```
+
 
 ```
-➜  istio-1.2.4  kubectl get crd | grep istio
+kubectl get crd | grep istio
 adapters.config.istio.io               2019-08-14T02:35:08Z
 attributemanifests.config.istio.io     2019-08-14T02:35:08Z
 authorizationpolicies.rbac.istio.io    2019-08-14T02:35:09Z
@@ -65,15 +66,16 @@ virtualservices.networking.istio.io    2019-08-14T02:35:08Z
 -------
 
 #### 部署 istio 控制器
-`
-➜ kubectl apply -f install/kubernetes/istio-demo.yaml 
-`
+```
+kubectl apply -f install/kubernetes/istio-demo.yaml 
+```
 
 -------
 
 #### 确认 istio-system pod 、svc 状态 :
+
 ```
-➜  istio-1.2.4  kubectl get pod,svc -n istio-system
+kubectl get pod,svc -n istio-system
 NAME                                          READY   STATUS      RESTARTS   AGE
 pod/grafana-6fb9f8c5c7-l22ss                  1/1     Running     0          14m
 pod/istio-citadel-66866dfc58-fq277            1/1     Running     0          14m

@@ -29,7 +29,7 @@ kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=ja
 #### 3. 测试
 持续放送请求
 ```
-➜  ~ watch -n 1 curl -o /dev/null -s -w %{http_code} $GATEWAY_URL/productpage
+watch -n 1 curl -o /dev/null -s -w %{http_code} $GATEWAY_URL/productpage
 ```
 可以看到每个服务请求的链路
 

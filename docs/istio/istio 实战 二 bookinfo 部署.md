@@ -27,19 +27,19 @@ v3 版本会调用 ratings 服务，并使用 1 到 5 个红色星形图标来�
 
 #### 创建命名空间
 ```
-➜ kubectl create ns bookinfo
+kubectl create ns bookinfo
 ```
 
 
 #### 添加label
 - 添加 label:
 ```
-➜ kubectl label ns bookinfo istio-injection=enabled
+kubectl label ns bookinfo istio-injection=enabled
 ```
 
 - 查看 label:
 ```
-➜  istio-1.2.4  kubectl describe ns bookinfo
+istio-1.2.4  kubectl describe ns bookinfo
 Name:         bookinfo
 Labels:       istio-injection=enabled
 Annotations:  <none>
@@ -52,12 +52,12 @@ No resource limits.
 
 - 部署:
 ```
-➜ kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo
+kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo
 ```
 
 - 获取 pod:
 ```
-➜  istio-1.2.4  kubectl get pod -n bookinfo
+istio-1.2.4  kubectl get pod -n bookinfo
 NAME                             READY   STATUS    RESTARTS   AGE
 details-v1-c5b5f496d-7c6sc       2/2     Running   0          29m
 productpage-v1-c7765c886-5j2mr   2/2     Running   0          29m
@@ -67,11 +67,6 @@ reviews-v2-597bf96c8f-gmtc5      2/2     Running   0          29m
 reviews-v3-54c6c64795-xcpz9      2/2     Running   0          29m
 ```
 
-- 确认app是否正常：
-```
-➜  istio-1.2.4  kubectl exec -it $(kubectl get pod -l app=ratings -o jsonpath='{.items[0].metadata.name}') -c ratings -- curl productpage:9080/productpage | grep -o "<title>.*</title>"
-<title>Simple Bookstore App</title>
-```
 
 #### 确认集群是否支持 负载均衡
 
@@ -89,12 +84,12 @@ kubectl get svc istio-ingressgateway -n istio-system
 #### 设置 istio-ingressgateway service 为 node port 
 - 修改 service type
 ```
-➜  kubectl patch service istio-ingressgateway -n istio-system -p '{"spec":{"type":"NodePort"}}'
+kubectl patch service istio-ingressgateway -n istio-system -p '{"spec":{"type":"NodePort"}}'
 ```
 
 - 查看service：
 ```
-➜  istio-1.2.4  kubectl get svc istio-ingressgateway -n istio-system
+kubectl get svc istio-ingressgateway -n istio-system
 NAME                   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)                                                                                                                                      AGE
 istio-ingressgateway   NodePort   10.110.171.111   <none>        15020:32681/TCP,80:31380/TCP,443:31390/TCP,31400:31400/TCP,15029:30352/TCP,15030:31338/TCP,15031:31328/TCP,15032:30977/TCP,15443:31688/TCP   23m
 ```
@@ -102,24 +97,24 @@ istio-ingressgateway   NodePort   10.110.171.111   <none>        15020:32681/TCP
 #### 部署 istio gateway
 - 部署:
 ```
-➜ kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
 ```
 
 - 查看 gateway：
 ```
-➜  istio-1.2.4  kubectl get gateway -n bookinfo
+kubectl get gateway -n bookinfo
 NAME               AGE
 bookinfo-gateway   46s
 ```
 
 - 设置 INGRESS_PORT:
 ```
-➜  export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
 ```
 
 - 确认 port
 ```
-➜  istio-1.2.4  echo $INGRESS_PORT
+echo $INGRESS_PORT
 31380
 ```
 

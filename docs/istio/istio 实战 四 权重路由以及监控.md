@@ -23,7 +23,7 @@
 # 操作步骤
 #### 1. 流量全部切换到 reviews:v1  版本
 ```
-➜ kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml -n bookinfo
+kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml -n bookinfo
 ```
 浏览器访问 http://hostip:port/productpage
 不管刷新多少次，页面的评论部分都不会显示评级星号,因为 Istio 被配置为将 reviews 服务的的所有流量都路由到了 reviews:v1 版本， 而该版本的服务不会访问带星级的 ratings 服务。
@@ -33,7 +33,7 @@
 #### 2. 切换50%流量到 reviews:v3 版本
 
 ```
-➜ kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-50-v3.yaml -n bookinfo
+kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-50-v3.yaml -n bookinfo
 ```
 
 浏览器访问 http://hostip:port/productpage
@@ -49,14 +49,14 @@ prometheus： 用来收集指标，并在 Prometheus 服务中查询 Istio 指�
 Grafana： 通过 Grafana Dashboard 对服务网格中的流量进行监控。
 
 ```
-➜ kubectl get pod -n istio-system
+kubectl get pod -n istio-system
 ```
 ![](https://github.com/xiliangMa/mscloud/blob/master/images/istio/istio-gp-dashboard.png)
 
 #### 1. 检测 prometheus
 
 ```
-➜  istio-1.2.4  kubectl -n istio-system get svc prometheus
+kubectl -n istio-system get svc prometheus
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
 prometheus   ClusterIP   10.111.73.248   <none>        9090/TCP   23h
 ```
@@ -64,7 +64,7 @@ prometheus   ClusterIP   10.111.73.248   <none>        9090/TCP   23h
 #### 2. 检测 Grafana 
 
 ```
-➜  istio-1.2.4  kubectl -n istio-system get svc grafana
+kubectl -n istio-system get svc grafana
 NAME      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
 grafana   ClusterIP   10.106.87.165   <none>        3000/TCP   23h
 ```
@@ -72,7 +72,7 @@ grafana   ClusterIP   10.106.87.165   <none>        3000/TCP   23h
 #### 3. 添加端口
 由于使用的是ClusterIP 类型集群外部无法访问 ，通过端口转发映射本地端口到指定的应用端口.
 ```
-➜ $ kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 3000:3000 &
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 3000:3000 &
 ```
 在 Web 浏览器中访问 http://localhost:3000/dashboard/db/istio-mesh-dashboard
 查看 Istio 仪表盘

@@ -19,7 +19,7 @@ kiali 为我们提供了查看相关服务与配置提供了统一化的可视�
 之前已经做过的可以省略 第 2 步。
 ##### 1. 检测服务是否正常
 ```
-➜  ~  kubectl -n istio-system get svc kiali
+kubectl -n istio-system get svc kiali
 NAME    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)     AGE
 kiali   ClusterIP   10.110.143.163   <none>        20001/TCP   25h
 ```
@@ -27,31 +27,31 @@ kiali   ClusterIP   10.110.143.163   <none>        20001/TCP   25h
 #### 2. 设置INGRESS_HOST
 设置INGRESS_PORT：
 ```
-➜  ~ export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
 ```
 
 设置 INGRESS_HOST：
 
 ```
-➜  ~ export INGRESS_HOST=127.0.0.1
+export INGRESS_HOST=127.0.0.1
 ```
 
 设置GATEWAY_URL:
 ```
-➜  ~ export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
+export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
 ```
 
 #### 3. 映射 kiali pod 端口
 
 ```
-➜  ~ kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001 &
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001 &
 ```
 
 ####  4. 持续发送请求
 如果系统中安装了 watch 命令，就可以用它来持续发送请求
 
 ```
-➜  ~ watch -n 1 curl -o /dev/null -s -w %{http_code} $GATEWAY_URL/productpage
+watch -n 1 curl -o /dev/null -s -w %{http_code} $GATEWAY_URL/productpage
 ```
 #### 5. 测试
 浏览器打开kiali地址 http://nodeip:20001 
