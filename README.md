@@ -44,19 +44,21 @@
    
    注意：如果部署在公有云服务器，需要将配置中心的各个服务域名配置成ip，或者购买云服务的自定义域名解析，否则服务注册发现失败。
  
+ [spring cloud 微服务 如何通过 docker-compose 编排](https://github.com/xiliangMa/mscloud/blob/master/docs/Docker-Compose/Docker-Compose%20实战篇%20二%20Docker%20Compose%20Spring-Cloud%20微服务编排-%20mscloud.md)
 
-# 解析配置
-    修改 hosts 文件，替换为自己的ip（如果以容器部署必须修改成本地ip）
-    127.0.0.1 mscloud-config-service
-    127.0.0.1 mscloud-eureka-service
-    127.0.0.1 mscloud-provider-service
-    127.0.0.1 mscloud-consumer-feign-service
-    127.0.0.1 mscloud-consumer-ribbon-service
-    127.0.0.1 mscloud-zipkin-service
-    127.0.0.1 mscloud-admin-service
-    127.0.0.1 mscloud-config-service
-    127.0.0.1 mscloud-zuul-service
-  
+# deploy by kubernetes
+1. 集群搭建
+        
+        kubeadm 搭建k8s集群： https://blog.csdn.net/weixin_41806245/article/details/89381752
+        
+ 2. 部署 mscloud
+
+        kubectl apply -f kubernetes/*.yml
+        
+![image](https://github.com/xiliangMa/mscloud/blob/master/images/k8s-mscloud.png) 
+
+ [spring cloud 微服务 迁移到 kubernetes平台](https://github.com/xiliangMa/mscloud/blob/master/docs/Spring-Cloud/spring-cloud%20实战%20十%20spring%20cloud%20微服务%20迁移到%20kubernetes平台.md)
+
   
 # Srping-Cloud 实战文章链接
 1. [Spring-Cloud 实战 一 服务配置中心 config](https://blog.csdn.net/weixin_41806245/article/details/97923108)
@@ -77,12 +79,6 @@
 5. [istio 实战 五 网格可视化 - kiali](https://blog.csdn.net/weixin_41806245/article/details/99674470)
 6. [istio 实战 六 全链路监控 - Jaeger](https://blog.csdn.net/weixin_41806245/article/details/99675558)
 
-
-
-# 容器化
- 1. docker
- 2. [docker-compose](https://github.com/xiliangMa/mscloud/blob/master/docs/Docker-Compose/Docker-Compose%20实战篇%20二%20Docker%20Compose%20Spring-Cloud%20微服务编排-%20mscloud.md)
- 3. [kubernetes](https://github.com/xiliangMa/mscloud/blob/master/docs/Spring-Cloud/spring-cloud%20实战%20十%20spring%20cloud%20微服务%20迁移到%20kubernetes平台.md)
    
 # 服务启动访问地址
  1. 配置中心 config：http://mscloud-config-service:8888/eureka-service/dev
@@ -95,6 +91,19 @@
  8. 服务监控 amdin：http://mscloud-admin-service:2000/#/applications
  
  
+ ## 解析配置
+     修改 hosts 文件，替换为自己的ip（如果以容器部署必须修改成本地ip）
+     127.0.0.1 mscloud-config-service
+     127.0.0.1 mscloud-eureka-service
+     127.0.0.1 mscloud-provider-service
+     127.0.0.1 mscloud-consumer-feign-service
+     127.0.0.1 mscloud-consumer-ribbon-service
+     127.0.0.1 mscloud-zipkin-service
+     127.0.0.1 mscloud-admin-service
+     127.0.0.1 mscloud-config-service
+     127.0.0.1 mscloud-zuul-service
+   
+   
 # 删除mscloud 所有容器
  1. by docker 
   
@@ -103,15 +112,21 @@
  2. by docker-compose
     
         docker-compose down
-
-# Deploy in kubernetes cluster 
- 1. 集群搭建
         
-        kubeadm 搭建k8s集群： https://blog.csdn.net/weixin_41806245/article/details/89381752
+ 3. by kubernetes
+ 
+        kubectl delete -f kubernetes/01-config.yml
+        kubectl delete -f kubernetes/02-eureka.yml
+        kubectl delete -f kubernetes/03-provider.yml
+        kubectl delete -f kubernetes/04-consumer-feign.yml
+        kubectl delete -f kubernetes/05-zuul.yml
+        kubectl delete -f kubernetes/06-admin.yml
+        kubectl delete -f kubernetes/07-zipkin.yml
         
- 2. 部署 mscloud
+        或者
+        
+        kubectl delete -f kubernetes/*.yml
 
-        kubectl apply -f kubernetes/*.yml
-![image](https://github.com/xiliangMa/mscloud/blob/master/images/k8s-mscloud.png) 
+ 
 
  
