@@ -72,6 +72,12 @@
 # istio 实战文章链接:
 1. [istio 实战 一 Kubernetes 中快速搭建 istio](https://blog.csdn.net/weixin_41806245/article/details/99589663)
 2. [istio 实战 二 bookinfo 部署](https://blog.csdn.net/weixin_41806245/article/details/99589830)
+3. [istio 实战 三 智能路由](https://blog.csdn.net/weixin_41806245/article/details/99629346)
+4. [istio 实战 四 权重路由以及监控](https://blog.csdn.net/weixin_41806245/article/details/99644214)
+5. [istio 实战 五 网格可视化 - kiali](https://blog.csdn.net/weixin_41806245/article/details/99674470)
+6. [istio 实战 六 全链路监控 - Jaeger](https://blog.csdn.net/weixin_41806245/article/details/99675558)
+
+
 
 # 容器化
  1. docker
@@ -108,7 +114,4 @@
         kubectl apply -f kubernetes/*.yml
 ![image](https://github.com/xiliangMa/mscloud/blob/master/images/k8s-mscloud.png) 
 
- # TODO
- 1. gitlab cicd 问题处理
- 2. 实现 spring cloud 微服务 + istio的结合
  
