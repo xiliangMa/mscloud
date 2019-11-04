@@ -253,7 +253,7 @@ mode: ipvs
 3. 初始化集群
 
 ```
-kubeadm  init --config=kubeadm.yml --experimental-upload-certs
+kubeadm  init --config=kubeadm.yml --upload-certs
 ```
 
 结果如下：
